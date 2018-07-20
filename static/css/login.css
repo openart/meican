@@ -1,0 +1,46 @@
+.login {
+    padding: 16px 0;
+}
+
+.login li {
+    padding: 12px;
+    display: flex;
+    display: -webkit-box;
+    color: #25324E;
+    font-size: 14px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.login li span {
+    padding-right: 16px;
+    line-height: 26px;
+}
+
+.login li input {
+    display: block;
+    flex: 1;
+    -webkit-box-flex: 1;
+    border: none;
+    outline: none;
+    line-height: 26px;
+}
+
+.login li img {
+    display: block;
+    width: 90px;
+    height: 26px;
+}
+
+.btn-login {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 0;
+    width: 80%;
+    font-size: 16px;
+    line-height: 18px;
+    color: #fff;
+    background: #6D737D;
+    border-radius: 21px;
+    text-align: center;
+    text-decoration: none;
+}

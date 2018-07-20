@@ -1,0 +1,29 @@
+.list {
+  padding: 0 0 0 16px;
+}
+
+.list .item ol {
+  padding-top: 16px;
+}
+
+.list .item ol li {
+  padding-bottom: 16px;
+  font-size: 14px;
+  line-height: 18px;
+  color: #25324E;
+}
+
+/* 空列表 */
+
+.empty-list {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.empty-list img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+}

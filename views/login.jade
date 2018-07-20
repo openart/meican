@@ -1,0 +1,23 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/css/login.css')
+
+block content
+  ul(class='login')
+    li
+      span 账号
+      input(type="text" id='user' placeholder="请输入账号")
+    li
+      span 密码
+      input(type="password" id='pwd' placeholder="请输入密码")
+    li(style="display:none")
+      span 验证码
+      input(type="text" id='code' placeholder="请输入验证码")
+      img(id='img_code' src='')
+    li(style="display:none")
+      span rand
+      input(type="text" id='rand')
+  div(class='btn-login' id='btn_login') 登入
+block js
+  script(src='/js/login.js')
