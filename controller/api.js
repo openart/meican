@@ -118,6 +118,15 @@ const API = {
         res.json(utils.convert())
       }
     })
+  },
+
+  /**
+   * 提交用户设置数据
+   * @param {Context} req 
+   * @param {Context} res 
+   */
+  submitSetting(req, res) {
+
   }
 }
 

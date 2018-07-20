@@ -32,6 +32,30 @@ const Auth = {
         }
       })
     })
+  },
+
+  /**
+   * 查询用户的基本信息
+   * @param {Object} req 
+   * @param {Object} res 
+   */
+  async queryUserInfo(req) {
+    return await new Promise((resolve, reject) => {
+      request.get(Host.user_info, {
+        headers: {
+          Cookie: req.headers.cookie
+        }
+      }, function (err, response, body) {
+        if (!err && response.statusCode == 200) {
+          body = JSON.parse(body)
+          /**获取用户用户名 */
+
+          let email = body.nameForShow
+
+          resolve(email)
+        }
+      })
+    })
   }
 }
 
