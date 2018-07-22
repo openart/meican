@@ -40,6 +40,10 @@ let DataBase = {
       let items = list[i].replace('\n', '').split(' ')
       if (items.length != 4) continue
 
+      /**判断是否测试环境，实时拉取数据 */
+      const config = require('../config/')
+      if (config.is_test && config.test_user.indexOf(items[0]) == -1) continue
+
       /**将当前用户插入数组中 */
       userList.push({
         user: items[0],

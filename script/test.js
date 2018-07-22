@@ -6,6 +6,7 @@ console.log(+arguments[0])
 
 
 
+const dataBase = require('../controller/dataBase')
 const message = require('./message')
 const workWx = require('../controller/workWx')
 
@@ -71,13 +72,14 @@ function crawlDishs() {
  * 发送企业微信数据测试
  */
 function sendWorkWx() {
-  let config = require('../config/')
-  let user = config.admin.map((v) => {
-    return v.split('@')[0]
+  let list = dataBase.queryUserList()
+  console.log(list)
+  let user = list.map((v) => {
+    return v.user.split('@')[0]
   }).join('|')
   workWx.send({
     user: user,
-    description: '美餐点餐提醒\r\n在电脑上点击即可预定一周的美食\r\n<a href="http://10.1.19.174:3001/order/reverse">开始点餐</a>'
+    description: '鉴于每周五很多同学会回家吃饭，为避免资源的浪费，如果用户不需要点餐，可通过<a href="http://10.1.19.174:3001/setting">菜单--设置</a>选项取消自动点餐'
   })
 }
 
@@ -87,6 +89,6 @@ function sendMessage() {
 
 
 function testConfig() {
-  console.log(process.cwd())
-  console.log(require('../config/').root)
+  let list = dataBase.queryUserList()
+  console.log(list)
 }

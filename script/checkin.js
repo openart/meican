@@ -85,9 +85,6 @@ async function checkIn(account) {
 }
 
 async function beginTask() {
-  /**配置文件 */
-  const config = require('../config/')
-
   // 获取所有的用户
   const userList = dataBase.queryUserList()
 
@@ -96,14 +93,9 @@ async function beginTask() {
 
   /**遍历执行函数 */
   for (let i = 0; i < userList.length; i++) {
-    /**测试代码start */
-    if (config.is_test && config.test_user.indexOf(userList[i].user) == -1) continue
-    /**测试代码end */
-
     /**获取用户配置文件 */
     let user = userList[i].user.split('@')[0]
     let setting = dataBase.queryUserSetting(user)
-    console.log(setting)
     if (!setting.auto_checkin) continue
 
     let result = await checkIn(userList[i])
@@ -114,13 +106,14 @@ async function beginTask() {
     if (!setting.wx_notice) continue
     let reverseTxt = '<a href="http://10.1.19.174:3001/order/reverse">至美一餐（pc点击预约）</a>'
 
-    console.log('模拟企业微信发送成功')
-    continue
     workWx.send({
-      user: userList[i].user.split('@')[0],
+      user: user,
       description: reverseTxt + '\r\n' + result
     })
   }
+
+  /**配置文件 */
+  const config = require('../config/')
 
   /**将邮件打包发送 */
   sendEmail({
