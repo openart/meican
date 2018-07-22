@@ -173,6 +173,25 @@ const Home = {
         })
       }
     })
+  },
+
+  /**
+   * 查询用户的预约
+   * @param {context} req 
+   * @param {context} res 
+   */
+  async userSetting(req, res) {
+    let user = await Auth.queryUserInfo(req)
+
+    /**查询用户的设置信息 */
+    let setting = dataBase.queryUserSetting(user)
+
+    console.log(setting)
+
+    res.render('setting', {
+      title: '设置',
+      data: setting
+    })
   }
 }
 

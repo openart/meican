@@ -28,6 +28,9 @@ router.get('/user/reverse', home.userReverse)
 /**订单预约 */
 router.get('/order/reverse', home.orderReverse)
 
+/**用户设置信息 */
+router.get('/setting', home.userSetting)
+
 /**关于 */
 router.get('/about', home.about)
 
@@ -39,5 +42,8 @@ router.get('/api/login', api.login)
 
 /**提交订单预约 */
 router.get('/api/submitOrderReverse', api.submitOrderReverse)
+
+/**提交设置 */
+router.get('/api/submitSetting', api.submitSetting)
 
 module.exports = router

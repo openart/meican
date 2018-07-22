@@ -283,6 +283,11 @@ input {
   background-size: 100% 100%;
 }
 
+.headerpt ul li.setting i {
+  background: url(../img/setting.svg) no-repeat;
+  background-size: 100% 100%;
+}
+
 .headerpt ul li.about i {
   background: url(../img/about.svg) no-repeat;
   background-size: 100% 100%;

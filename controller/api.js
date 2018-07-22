@@ -11,6 +11,7 @@ const errorCode = require('../config/error')
 
 /**配置文件 */
 const Host = require('../config/').host
+const Auth = require('./auth')
 
 /**工具类 */
 const utils = {
@@ -125,8 +126,13 @@ const API = {
    * @param {Context} req 
    * @param {Context} res 
    */
-  submitSetting(req, res) {
+  async submitSetting(req, res) {
+    let params = req.query
+    let user = await Auth.queryUserInfo(req)
 
+    params.user = user
+    dataBase.submitUserSetting(params)
+    res.json(utils.convert())
   }
 }
 

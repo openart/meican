@@ -1,6 +1,7 @@
 /**node资源库 */
 let fs = require('fs')
 const path = require('path')
+extend = require('extend')
 
 /**配置文件 */
 const Path = require('../config/').path
@@ -142,6 +143,61 @@ let DataBase = {
     let file = fs.readFileSync(Path.static_dishs, 'utf-8')
     let staticDishs = JSON.parse(file)
     return staticDishs[id] || ''
+  },
+
+  /**
+   * 查询用户设置信息
+   * @param {String} user 用户名
+   */
+  queryUserSetting(user) {
+    let res = {
+      wx_notice: 1,
+      auto_checkin: 1
+    }
+    let isexits = fs.existsSync(Path.setting)
+    if (!isexits) return res
+
+    let txt = fs.readFileSync(Path.setting, 'utf-8')
+    let obj = {}
+
+    try {
+      obj = JSON.parse(txt)
+    } catch (e) { }
+
+    return extend(res, obj[user]) || res
+  },
+
+  /**
+   * 提交用户设置
+   * @param {Object} params 设置参数对象
+   */
+  submitUserSetting(params) {
+    let isexists = fs.existsSync(Path.setting)
+    let allSetting = {}
+
+    if (isexists) {
+      /**读取文件内容 */
+      let txt = fs.readFileSync(Path.setting)
+      allSetting = (() => {
+        let obj = {}
+        try {
+          return JSON.parse(txt)
+        } catch (e) { }
+        return {}
+      })()
+    }
+
+    let userSetting = allSetting[params.user] || {}
+
+    allSetting[params.user] = extend(userSetting, (() => {
+      let obj = {}
+      obj[params.k] = +params.v
+      return obj
+    })())
+
+    console.log(JSON.stringify(allSetting))
+
+    fs.writeFileSync(Path.setting, JSON.stringify(allSetting))
   }
 }
 
