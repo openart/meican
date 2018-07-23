@@ -181,12 +181,19 @@ const Home = {
    * @param {context} res 
    */
   async userSetting(req, res) {
+    /**登录钩子函数 */
+    let login = await Auth.login(req)
+    if (!login) {
+      res.render('login', {
+        title: '登入'
+      })
+    }
+
+    /**查询用户信息 */
     let user = await Auth.queryUserInfo(req)
 
     /**查询用户的设置信息 */
     let setting = dataBase.queryUserSetting(user)
-
-    console.log(setting)
 
     res.render('setting', {
       title: '设置',

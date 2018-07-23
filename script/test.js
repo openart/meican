@@ -84,7 +84,10 @@ function sendWorkWx() {
 }
 
 function sendMessage() {
-  message.send()
+  let params = {
+    message: '鉴于每周五很多同学会回家吃饭，为避免资源的浪费，如果用户不需要点餐，可通过<a href="http://10.1.19.174:3001/setting">菜单--设置</a>选项取消自动点餐'
+  }
+  message.send(params)
 }
 
 

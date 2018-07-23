@@ -104,7 +104,7 @@ async function beginTask() {
 
     /**发送微信 */
     if (!setting.wx_notice) continue
-    let reverseTxt = '<a href="http://10.1.19.174:3001/order/reverse">至美一餐（pc点击预约）</a>'
+    let reverseTxt = '<a href="http://10.1.19.174:3001/order/reverse">美餐点餐提醒（pc点击预约）</a>'
 
     workWx.send({
       user: user,

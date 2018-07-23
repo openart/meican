@@ -1,6 +1,5 @@
 /**
- * 每周一执行脚本
- * 提醒用户点餐
+ * 消息发送类
  */
 
 /**数据库模块 */
@@ -27,7 +26,7 @@ Message.prototype = {
 
     workWx.send({
       user: toUser,
-      description: options.message || '至美一餐\r\n在电脑上点击即可预定一周的美食\r\n<a href="http://10.1.19.174:3001/order/reverse">开始点餐</a>'
+      description: options.message || ''
     })
   }
 }

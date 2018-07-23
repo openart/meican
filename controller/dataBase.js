@@ -199,8 +199,6 @@ let DataBase = {
       return obj
     })())
 
-    console.log(JSON.stringify(allSetting))
-
     fs.writeFileSync(Path.setting, JSON.stringify(allSetting))
   }
 }

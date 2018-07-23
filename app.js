@@ -83,7 +83,18 @@ new CronJob('00 00 10 * * 1-5', function () {
 
 /**每周一上午10:30提醒用户点餐 */
 new CronJob('00 30 10 * * 1', function () {
-  Message.send()
+  let params = {
+    message: '美餐点餐提醒\r\n在电脑上点击即可预定一周的美食\r\n<a href="http://10.1.19.174:3001/order/reverse">开始点餐</a>'
+  }
+  Message.send(params)
+}, null, true, 'Asia/Shanghai')
+
+/**每周无下午两点提醒用户是否关闭自动点餐 */
+new CronJob('00 30 14 * * 5', function () {
+  let params = {
+    message: '鉴于每周五很多同学会回家吃饭，为避免资源的浪费，如果用户不需要点餐，可通过<a href="http://10.1.19.174:3001/setting">菜单--设置</a>选项取消自动点餐'
+  }
+  Message.send(params)
 }, null, true, 'Asia/Shanghai')
 
 module.exports = app;
