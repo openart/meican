@@ -82,12 +82,49 @@ const home = {
   },
 
   /**
+   * 模糊查询
+   */
+  queryFoodListByName: function (name) {
+    let params = {
+      name: name
+    }
+    $.ajax({
+      url: '/api/queryFoodListByName',
+      timeout: 5000,
+      data: params,
+      success: function (data) {
+        data = JSON.parse(data)
+        if (+data.result == 0) {
+          let result_rows = data.result_rows
+
+          let html = result_rows.map((v) => {
+            return v.list.map((val) => {
+              return '<li class="bdr-bottom js-check-food" data-id=' +
+                val.id + '><i></i><span>' +
+                val.name + '</span><span data-id='+ v.uniqueId +'>' + v.name + '<span></li>'
+            }).join('')
+          }).join('')
+
+          $('#food_list').html(html)
+        } else {
+          alert('获取食品列表出错')
+        }
+      },
+      error(xhr, status) {
+        utils.showToast(status)
+      }
+    })
+  },
+
+  /**
    * 绑定事件
    */
   bindEvent() {
     let _this = this
+    let flag = true
     /**餐厅的click事件 */
     $('#dish li').on('click', function () {
+      $('#search').val('')
       $(this).addClass('active').siblings().removeClass('active')
       _this.queryFoodsById()
     })
@@ -100,6 +137,24 @@ const home = {
     /**用户选择食品的类切换事件 */
     $('body').on('click', '.js-check-food', function () {
       $(this).addClass('active').siblings().removeClass('active')
+    })
+
+    $('#search').on('compositionstart',function(){
+      flag = false
+    })
+
+    $('#search').on('compositionend',function(){
+      console.log(flag)
+      flag = true
+    })
+
+    $('#search').on('input propertychange', function () {
+      setTimeout(()=>{
+        if (!flag) return false
+        let name = $(this).val()
+        console.log(name)
+        _this.queryFoodListByName(name.replace(/(^\s*)|(\s*$)/g, ''))
+      }, 0)
     })
 
     // 提交选择数据

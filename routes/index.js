@@ -46,4 +46,7 @@ router.get('/api/submitOrderReverse', api.submitOrderReverse)
 /**提交设置 */
 router.get('/api/submitSetting', api.submitSetting)
 
+/**根据餐品名称模糊查询食品列表 */
+router.get('/api/queryFoodListByName', api.queryFoodListByName)
+
 module.exports = router

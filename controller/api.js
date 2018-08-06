@@ -97,6 +97,26 @@ const API = {
   },
 
   /**
+   * 根据餐品名称模糊查询查询食品列表
+   * @param {String} id 
+   */
+  queryFoodListByName(req, res) {
+    let name = req.query.name
+    let dishList = dataBase.queryAlldishs()
+
+    let dishInfo = dishList.map((v) => {
+      v.list = v.list.filter((val) => {
+        return val.name.indexOf(name) > -1
+      })
+      return v
+    })
+
+    res.json(utils.convert(dishInfo))
+  },
+
+
+
+  /**
    * 提交预约
    */
   submitOrderReverse(req, res) {

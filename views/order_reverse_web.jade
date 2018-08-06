@@ -17,6 +17,9 @@ block content
         - for (var i = 0; i < dishs.length; ++i) {
             li(class= - i==0 ? "active" : "" value=dishs[i].uniqueId) #{dishs[i].name}
         - }
+    div(class='opt')
+      span 搜索
+      input(id='search' placeholder='请输入喜欢的餐品')
     ul(id='food_list' class='food-list')
   div(class='btn-wrap')
     a(class='btn_submit js-submit-food') 提交
