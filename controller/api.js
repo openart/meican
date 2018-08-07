@@ -109,6 +109,8 @@ const API = {
         return val.name.indexOf(name) > -1
       })
       return v
+    }).filter((v) => {
+      return v.list.length > 0
     })
 
     res.json(utils.convert(dishInfo))
