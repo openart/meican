@@ -101,7 +101,7 @@ const home = {
             return v.list.map((val) => {
               return '<li class="bdr-bottom js-check-food" data-id=' +
                 val.id + '><i></i><span>' +
-                val.name + '</span><span data-id='+ v.uniqueId +'>' + v.name + '<span></li>'
+                val.name + '</span><span data-id='+ v.uniqueId +'>' + v.name + '</span></li>'
             }).join('')
           }).join('')
 
