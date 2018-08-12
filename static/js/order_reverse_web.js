@@ -159,5 +159,6 @@ const home = {
 
     // 提交选择数据
     $('body').on('click', '.js-submit-food', this.submitFood)
+    $('body').on('click', '.js-submit-favorite', this.submitFavorite)
   }
 }
