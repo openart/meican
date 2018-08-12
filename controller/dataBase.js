@@ -136,7 +136,9 @@ let DataBase = {
     }
 
     let data = params.data || {}
-    obj[data.food] = {}
+    obj[data.food] = {
+      checked: 1
+    }
 
     /**写入数据库 */
     fs.writeFileSync(path, JSON.stringify(obj))
@@ -196,6 +198,13 @@ let DataBase = {
     for (let k in obj) {
       list.push(k)
     }
+
+    /**过滤掉用户取消收藏的部分 */
+    list = list.filter((v) => {
+      return +obj[v].checked === 1
+    })
+
+    /**随机浮动 */
     let index = parseInt(Math.random() * list.length)
     return list[index] || ''
   },
@@ -271,6 +280,33 @@ let DataBase = {
     })())
 
     fs.writeFileSync(Path.setting, JSON.stringify(allSetting))
+  },
+
+  /**
+   * 修改收藏的状态
+   * @param {*} params 设置参数对象
+   */
+  submitSwitchFavorite(params) {
+    let fileNmae = params.user
+    let path = Path.my_favorite + fileNmae
+
+    /**
+     * 判断文件是否存在
+     * 存在就读取里面内容
+     * 不存在则直接写入
+     */
+    let isexists = fs.existsSync(path)
+    let obj = {}
+    if (isexists) {
+      /**读取文件内容 */
+      let txt = fs.readFileSync(path)
+      obj = JSON.parse(txt)
+    }
+
+    obj[params.id].checked = params.checked
+
+    /**写入数据库 */
+    fs.writeFileSync(path, JSON.stringify(obj))
   }
 }
 

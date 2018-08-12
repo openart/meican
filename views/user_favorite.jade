@@ -8,7 +8,8 @@ block content
     ul(class='list')
       - for (var i = 0; i < list.length; ++i) {
           li(class='item bdr-bottom')
-            ol
+            i(class = list[i].checked ? 'checked' : '' class='js-cancel-favorite star' data-id=list[i].dish_id)
+            ol(style='padding-left:24px')
               li
                 span 餐品id：
                 span #{list[i].dish_id}
@@ -22,3 +23,6 @@ block content
   - else
     div(class='empty-list')
       img(src="/img/null.png")
+
+block js
+  script(src='/js/user_favorite.js')

@@ -31,14 +31,21 @@ async function checkIn(account) {
   let date = sd.format(new Date(), 'YYYY-MM-DD')
   let targetTime = date + ' 17:00'
 
+  let tag = ''
+
   /**获取用户预约的餐品ID */
   let dishId = dataBase.queryUserReverse(account.user)[date] || ''
+  tag = dishId ? '预约' : ''
 
   /**获取用户收藏的随机餐品ID */
   dishId = dishId ? dishId : dataBase.queryRegularFavorite(account.user)
+  tag = tag ? tag : (dishId ? '收藏' : '')
 
   /**随机获取一个餐品ID */
   dishId = dishId ? dishId : dataBase.queryRegularDish()
+  tag = tag ? tag : '随机'
+
+  console.log(tag)
 
   let params = {
     corpAddressRemark: '',
@@ -77,7 +84,7 @@ async function checkIn(account) {
         let orderResultDesc = ''
         /**订餐成功 */
         if (body.status == 'SUCCESSFUL') {
-          orderResultDesc = '订单状态：成功\r\n餐品id：' + dishId + '\r\n' + '餐品名称：' + dataBase.queryDishNameById(dishId)
+          orderResultDesc = '订单状态：成功\r\n来源：' + tag + '\r\n餐品id：' + dishId + '\r\n' + '餐品名称：' + dataBase.queryDishNameById(dishId)
         } else {
           /**订餐失败 */
           orderResultDesc = '订单状态：失败\r\n失败原因：' + (body.error_description || body.message || '未知异常，请至网页或者app点餐')

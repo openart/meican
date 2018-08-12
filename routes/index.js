@@ -55,4 +55,7 @@ router.get('/api/submitSetting', api.submitSetting)
 /**根据餐品名称模糊查询食品列表 */
 router.get('/api/queryFoodListByName', api.queryFoodListByName)
 
+/**切换收藏 */
+router.get('/api/switchFavorite', api.switchFavorite)
+
 module.exports = router

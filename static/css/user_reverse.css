@@ -1,5 +1,24 @@
 .list {
+  position: relative;
   padding: 0 0 0 16px;
+}
+
+.list .item .star {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: url(../img/favorite.svg) no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.list .item .star.checked {
+  background: url(../img/star.svg) no-repeat;
+  background-size: cover;
 }
 
 .list .item ol {

@@ -175,9 +175,9 @@ const Home = {
     })
   },
 
-    /**
-   * 用户预约收藏
-   */
+  /**
+ * 用户预约收藏
+ */
   async userFavorite(req, res) {
     let login = await Auth.login(req)
     if (!login) {
@@ -192,7 +192,8 @@ const Home = {
     let list = []
     for (let k in obj) {
       list.push({
-        dish_id: k
+        dish_id: k,
+        checked: obj[k].hasOwnProperty('checked') ? +obj[k].checked : 1
       })
     }
     list = list.map((v) => {

@@ -174,6 +174,16 @@ const API = {
     params.user = user
     dataBase.submitUserSetting(params)
     res.json(utils.convert())
+  },
+
+  /**切换收藏状态 */
+  async switchFavorite(req, res) {
+    let params = req.query
+    let user = await Auth.queryUserInfo(req)
+
+    params.user = user
+    dataBase.submitSwitchFavorite(params)
+    res.json(utils.convert())
   }
 }
 
