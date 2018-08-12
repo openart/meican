@@ -144,6 +144,25 @@ const API = {
   },
 
   /**
+   * 提交收藏
+   * @param {context} req 
+   * @param {context} res 
+   */
+  async submitFoodFavorite(req, res) {
+    let query = req.query
+
+    /**以用户名称（邮箱）纬度保存 */
+    let user = await Auth.queryUserInfo(req)
+
+    /**保存数据到数据库中 */
+    dataBase.saveFoodFavorite({
+      user: user,
+      data: query
+    })
+    res.json(utils.convert())
+  },
+
+  /**
    * 提交用户设置数据
    * @param {Context} req 
    * @param {Context} res 

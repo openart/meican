@@ -273,6 +273,11 @@ input {
   background-size: 100% 100%;
 }
 
+.headerpt ul li.my-favorite i {
+  background: url(../img/favorite.svg) no-repeat;
+  background-size: 100% 100%;
+}
+
 .headerpt ul li.basic-info i {
   background: url(../img/basic-info.svg) no-repeat;
   background-size: 100% 100%;

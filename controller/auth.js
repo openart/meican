@@ -50,7 +50,7 @@ const Auth = {
           body = JSON.parse(body)
           /**获取用户用户名 */
 
-          let user = body.nameForShow.split('@')[0]
+          let user = body.nameForShow
 
           resolve(user)
         }

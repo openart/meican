@@ -31,8 +31,13 @@ async function checkIn(account) {
   let date = sd.format(new Date(), 'YYYY-MM-DD')
   let targetTime = date + ' 17:00'
 
-  /**获取用户的餐品ID */
+  /**获取用户预约的餐品ID */
   let dishId = dataBase.queryUserReverse(account.user)[date] || ''
+
+  /**获取用户收藏的随机餐品ID */
+  dishId = dishId ? dishId : dataBase.queryRegularFavorite(account.user)
+
+  /**随机获取一个餐品ID */
   dishId = dishId ? dishId : dataBase.queryRegularDish()
 
   let params = {

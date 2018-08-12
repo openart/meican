@@ -175,6 +175,37 @@ const Home = {
     })
   },
 
+    /**
+   * 用户预约收藏
+   */
+  async userFavorite(req, res) {
+    let login = await Auth.login(req)
+    if (!login) {
+      res.render('login', {
+        title: '登入'
+      })
+    }
+
+    let user = await Auth.queryUserInfo(req)
+
+    let obj = dataBase.queryUserFavorite(user)
+    let list = []
+    for (let k in obj) {
+      list.push({
+        dish_id: k
+      })
+    }
+    list = list.map((v) => {
+      v.dish_name = dataBase.queryDishNameById(v.dish_id)
+      return v
+    })
+
+    res.render('user_favorite', {
+      title: '我的收藏',
+      list: list
+    })
+  },
+
   /**
    * 查询用户的预约
    * @param {context} req 

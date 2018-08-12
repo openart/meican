@@ -108,6 +108,40 @@ let DataBase = {
     /**判断文件夹中是否有文件 */
     fs.writeFileSync(path, JSON.stringify(obj))
   },
+
+  /**
+   * 保存收藏数据到数据库中
+   * @param {Object} params 
+   */
+  saveFoodFavorite(params) {
+    let fileNmae = params.user
+    let path = Path.my_favorite + fileNmae
+
+    /**判断预约的文件夹是否存在，如不存在，则创建 */
+    if (!fs.existsSync(Path.my_favorite)) {
+      fs.mkdirSync(Path.my_favorite)
+    }
+
+    /**
+     * 判断文件是否存在
+     * 存在就读取里面内容
+     * 不存在则直接写入
+     */
+    let isexists = fs.existsSync(path)
+    let obj = {}
+    if (isexists) {
+      /**读取文件内容 */
+      let txt = fs.readFileSync(path)
+      obj = JSON.parse(txt)
+    }
+
+    let data = params.data || {}
+    obj[data.food] = {}
+
+    /**写入数据库 */
+    fs.writeFileSync(path, JSON.stringify(obj))
+  },
+
   /**
  * 获取用户预约的订单列表
  * @param {String} user 
@@ -129,6 +163,43 @@ let DataBase = {
     }
     return obj
   },
+
+  /**
+   * 获取用户收藏列表
+   * @param {String} user 
+   */
+  queryUserFavorite(user) {
+    /**用户预约文件存放地址 */
+    let isexists = fs.existsSync(Path.user)
+
+    /**如果不存在，则返回空 */
+    if (!isexists) return {}
+    let obj = {}
+    if (isexists) {
+      /**读取文件内容 */
+      /**首先判断用户收藏文件是否存在,如不存在，则直接返回空值 */
+      let isUserExists = fs.existsSync(Path.my_favorite + user)
+      if (!isUserExists) return {}
+      let txt = fs.readFileSync(Path.my_favorite + user)
+      obj = JSON.parse(txt)
+    }
+    return obj
+  },
+
+  /**
+   * 获取用户随机收藏餐品
+   * @param {String} user 
+   */
+  queryRegularFavorite(user) {
+    let obj = this.queryUserFavorite(user)
+    let list = []
+    for (let k in obj) {
+      list.push(k)
+    }
+    let index = parseInt(Math.random() * list.length)
+    return list[index] || ''
+  },
+
   /**
    * 获取同事常点的餐品
    */

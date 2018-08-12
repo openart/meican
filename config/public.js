@@ -9,6 +9,7 @@ module.exports = {
     fav_dishs: root + '/database/fav_dishs',
     static_dishs: root + '/database/static_dishs',
     order_reverse: root + '/database/order_reverse/',
+    my_favorite: root + '/database/my_favorite/',
     setting: root + '/database/setting'
   },
   host: {

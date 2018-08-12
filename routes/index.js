@@ -22,8 +22,11 @@ router.get('/user/info', home.userInfo)
 /**用户列表 */
 router.get('/user/list', home.userList)
 
-/**用户预约 */
+/**我的预约 */
 router.get('/user/reverse', home.userReverse)
+
+/**我的收藏 */
+router.get('/user/favorite', home.userFavorite)
 
 /**订单预约 */
 router.get('/order/reverse', home.orderReverse)
@@ -42,6 +45,9 @@ router.get('/api/login', api.login)
 
 /**提交订单预约 */
 router.get('/api/submitOrderReverse', api.submitOrderReverse)
+
+/**提交餐品收藏 */
+router.get('/api/submitFoodFavorite', api.submitFoodFavorite)
 
 /**提交设置 */
 router.get('/api/submitSetting', api.submitSetting)

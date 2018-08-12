@@ -43,7 +43,7 @@ const home = {
   /**
    * 提交食品选择到数据库中
    */
-  submitFood() {
+  submitOrderReverse() {
     /**获取参数 */
     let date = $('#date').find('li.active').attr('value')
     let food = $('#food_list').find('li.active').data('id')
@@ -73,6 +73,40 @@ const home = {
           utils.showToast('提交预约成功')
         } else {
           utils.showToast('提交预约失败')
+        }
+      },
+      error(xhr, status) {
+        utils.showToast(status)
+      }
+    })
+  },
+
+  /**
+   * 提交收藏
+   */
+  submitFoodFavorite() {
+    /**获取参数 */
+    let food = $('#food_list').find('li.active').data('id')
+
+    if (!food) {
+      utils.showToast('请选择食品品类')
+      return false
+    }
+
+    let params = {
+      food: food
+    }
+
+    $.ajax({
+      url: '/api/submitFoodFavorite',
+      timeout: 5000,
+      data: params,
+      success: function (data) {
+        data = JSON.parse(data)
+        if (+data.result == 0) {
+          utils.showToast('提交收藏成功')
+        } else {
+          utils.showToast('提交收藏失败')
         }
       },
       error(xhr, status) {
@@ -158,7 +192,7 @@ const home = {
     })
 
     // 提交选择数据
-    $('body').on('click', '.js-submit-food', this.submitFood)
-    $('body').on('click', '.js-submit-favorite', this.submitFavorite)
+    $('body').on('click', '.js-submit-food', this.submitOrderReverse)
+    $('body').on('click', '.js-submit-favorite', this.submitFoodFavorite)
   }
 }

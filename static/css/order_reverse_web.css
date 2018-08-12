@@ -120,9 +120,9 @@
   color: #fff;
   cursor: pointer;
 }
-.color-green {
+.btn-reverse {
   background: #9ec341;
 }
-.color-gray {
+.btn-favorite {
   background: #6D737D;
 }
