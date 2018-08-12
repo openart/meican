@@ -106,7 +106,7 @@ async function beginTask() {
   /**遍历执行函数 */
   for (let i = 0; i < userList.length; i++) {
     /**获取用户配置文件 */
-    let user = userList[i].user.split('@')[0]
+    let user = userList[i].user
     let setting = dataBase.queryUserSetting(user)
     if (!setting.auto_checkin) continue
 

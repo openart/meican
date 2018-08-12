@@ -29,6 +29,9 @@ switch (+arguments[0]) {
   case 6:
     testConfig()
     break
+  case 7:
+    resetSetting()
+    break
 }
 
 /**
@@ -94,4 +97,9 @@ function sendMessage() {
 function testConfig() {
   let list = dataBase.queryUserList()
   console.log(list)
+}
+
+function resetSetting() {
+  const Setting = require('../script/setting')
+  Setting.reset()
 }

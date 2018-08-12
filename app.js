@@ -11,6 +11,7 @@ const CheckIn = require('./script/checkin')
 const Spider = require('./script/spider')
 const Message = require('./script/message')
 const workWx = require('./controller/WorkWx')
+const Setting = require('./script/setting')
 
 var indexRouter = require('./routes/index');
 
@@ -89,12 +90,17 @@ new CronJob('00 30 10 * * 1', function () {
   Message.send(params)
 }, null, true, 'Asia/Shanghai')
 
-/**每周无下午两点提醒用户是否关闭自动点餐 */
+/**每周五下午两点提醒用户是否关闭自动点餐 */
 new CronJob('00 30 14 * * 5', function () {
   let params = {
     message: '鉴于每周五很多同学会回家吃饭，为避免资源的浪费，如果用户不需要点餐，可通过<a href="http://10.1.19.174:3001/setting">菜单--设置</a>选项取消自动点餐'
   }
   Message.send(params)
+}, null, true, 'Asia/Shanghai')
+
+/**每周五下午16:00重置setting类 */
+new CronJob('00 00 16 * * 5', function () {
+  Setting.reset()
 }, null, true, 'Asia/Shanghai')
 
 module.exports = app;
