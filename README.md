@@ -1,162 +1,142 @@
-> 架构介绍
-- 基于node的express框架，前端使用jade模板渲染页面，使用zepto处理前后端的请求交互，使用记事本作为轻量级的数据存储
+# 知乎日报的 Spider-Man
+
+[详细介绍](https://github.com/ccforward/cc/issues/45)
+
+## About
+
+Node.js + Vue.js + MongoDB 的知乎日报爬虫项目
+
+## 技术栈
+
+#### 后端
+
+Node.js + Express + MongoDB
+
+使用 Express 搭建 web 服务，爬虫爬取的数据用 MongoDB 存储。
 
 
-> 主要node组件
-- **supervisor** node express框架开发环境监听文件变化
-- **forever** 守护进程
-- **jade** 前端渲染模板代理
-- **superagent** 模拟浏览器代理，登录使用
-- **request** 爬虫，接口请求
-- **nodemailer** 邮件发送
-- **silly-datetime** node 格式化事件组件
-- **cron** 定时任务
+用 node-jieba分词 分析正文的tag，做则更能准确的数据分析和内容搜索 (doing)
 
+#### 前端
 
-> 产品介绍
-- 用户登录之后可进行订单预约
-- 每天只可预约本周内的订单，即周一可预约到本周五，周五只可预约一天，非工作日不能预约
-- 每周一到周五上午10:00更新「所有餐品列表」与「同事常点餐品列表」
-- 每周一到周五下午15:00脚本自动根据用户的预约点餐，如果用户没有预约，则随机从「同事常点餐品列表」中点取一份
-- 本脚本不保存用户的登录密码，只缓存cookie信息用于点餐
-点餐完成后，将会以企业微信的方式通知点餐结果
+ES6 + Vue + Webpack
 
-> node组件库安装
-- 安装node环境，执行npm install,安装node相关组件即可
+基于 Vue2.0 的单页面应用 用webpack做前端代码构建
 
-> 命令行介绍，默认前缀（npm run ）
-- start 本地开发环境，使用supervisor组件开启文件监听
-- dish 手动执行脚本，获取「所有餐品列表」、「同事常点餐品列表」，更新「静态餐饮列表」
-- forever 守护进程启动网站
-- stop 守护进程关闭网站
-- test 测试脚本，包含点餐、发送邮件、爬取餐饮列表、发送企业微信（组件暂时未同步到github）、发送静态消息测试
+数据统计的页面使用原生 ES6 代码编写，单独配置了webpack做构建，没有和 Vue 的webpack构建代码混在一起
 
+## 使用说明
 
-> 说明
-- 仓库中并不包括databse文件夹，如果需要，请自己新建
-- 因为企业微信接口接口只能在内网访问，所以并没有上传至仓库，如果遇到提示缺少该组件的error，删除该段逻辑即可
+### mongoDB
 
-> 目录介绍
+1. 启动 mongoDB `sudo mongod`
 
-```
-│  app.js                       ---页面启动js
-│  config.js                    ---配置文件
-│  package-lock.json            ---package
-│  package.json                 ---node组件库
-│  README.md                    ---readme
-│
-├─bin
-│      www                      ---脚本入口
-│
-├─config
-│      error.js                 ---错误码配置文件
-│      user.js                  ---用户信息配置文件，已废弃
-│
-├─controller
-│      api.js                   ---http请求
-│      auth.js                  ---判断用户是否登录
-│      autoCheckIn.js           ---自动点餐测试脚本
-│      dataBase.js              ---模拟数据库链接增删改查
-│      home.js                  ---渲染页面视图引擎
-│      login.js                 ---登录模块
-│      sendEmail.js             ---邮件模块
-│      workWx.js                ---企业微信模块
-│
-├─database                      ---数据库
-│  │  all_dishs                 ---所有餐饮列表，每工作日上午10:00更新
-│  │  fav_dishs                 ---同事常点餐饮列表，每工作日上午10:00更新
-│  │  static_dishs              ---静态餐饮列表，每工作日附加
-│  │  user                      ---用户信息列表
-│  │
-│  └─order_reverse              ---用户预约文件夹，已用户名分割命名
-│
-├─log
-│      err.log                  ---错误日志
-│      out.log                  ---console输出日志
-│
-├─routes
-│      index.js                 ---路由
-│
-├─script
-│      checkin.js               ---点餐
-│      dish.js                  ---测试点餐
-│      message.js               ---每周一消息提醒
-│      spider.js                ---爬虫脚本
-│      test.js                  ---测试数据脚本
-│
-├─static
-│  ├─css
-│  │      about.css             ---关于我们
-│  │      common.css            ---公共基础样式表
-│  │      index.css             ---首页
-│  │      login.css             ---登录
-│  │      order_reverse.css     ---预约（mobile）
-│  │      order_reverse_web.css ---预约（pc）
-│  │      reset.css             ---reset.css
-│  │      user_info.css         ---用户信息
-│  │      user_list.css         ---用户列表
-│  │      user_reverse.css      ---用户预约
-│  │
-│  ├─description                ---github readme
-│  │      menu.png
-│  │      my_reverse.png
-│  │      order_reverse.png
-│  │      user_info.png
-│  │
-│  ├─img
-│  │      about.svg
-│  │      basic-info.svg
-│  │      close.svg
-│  │      dish.svg
-│  │      favicon.ico
-│  │      home.svg
-│  │      menu.svg
-│  │      my-reverse.svg
-│  │      null.png
-│  │      reverse.svg
-│  │      selected-ico-gray.svg
-│  │      selected-ico.svg
-│  │      user-list.svg
-│  │
-│  └─js
-│          common.js
-│          index.js
-│          login.js
-│          order_reverse.js
-│          order_reverse_web.js
-│          user_list.js
-│
-└─views
-        about.jade
-        error.jade
-        index.jade
-        layout.jade
-        login.jade
-        order_reverse.jade
-        order_reverse_web.jade
-        user_info.jade
-        user_list.jade
-        user_reverse.jade
+2. 用命令 `mongo`  进入命令行模式
+
+3. 创建数据库
+
+```shell
+use zhihu
 ```
 
+4. 创建用户 (这里的 username 和 password 要和 config.js 里相对应)
 
-> 菜单介绍
+```shell
+db.createUser({
+  user: "username",
+  pwd: "password",
+  "roles" : [
+  {
+    "role" : "readWrite",
+    "db" : "report"
+  },{
+    "role" : "dbAdmin",
+    "db" : "report"
+  }]
+})
+```
 
-实现包括预约、预约查询、基本信息查询、用户列表的功能
+### 配置文件 config.js
 
-![image](https://raw.githubusercontent.com/openart/meican/master/static/description/menu.png)
+config.js.sample 重命名为 config.js
 
-> 预约
+说明:
 
-用户登录之后可预约一周之内的餐品，每天只可预约本周内的订单，即周一可预约到本周五，周五只可预约一天，非工作日不能预约点击，点击提交后提示当前的预约状态
-![image](https://github.com/openart/meican/blob/master/static/description/order_reverse.png?raw=true)
+* auth 知乎日报用来验证用户的key 用于http的请求头(真正的key叫做 `Authorization`)
+* `fire: true` 是否启动爬虫爬取历史信息
+* `openTask:true` 表示开启定时任务  每日爬虫和定时更新
+* interval 爬虫间隔时间
+* start end  爬历史数据的开始结束时间 为由近到远的日期（知乎日报生日: 20130519）  
+  start时间 比 end时间 晚
 
-> 我的预约
+在config.js文件中设置 `fire: true`  表示开启爬虫，对应的 start end 
 
-考虑到用户可能忘记预约的记录，也不能在美餐上面查看，所以提供查询预约的功能，用户可以查询当天以及之后的所有预约订单
-![image](https://github.com/openart/meican/blob/master/static/description/my_reverse.png?raw=true)
 
-> 用户信息
 
-此接口可实时拉取用户在美餐的基本信息
-![image](https://github.com/openart/meican/blob/master/static/description/user_info.png?raw=true)
+### 其他
+
+如果在页面的HTTP的请求头里想加入 Authorization 和 referer 可以用这个 [chrome扩展](https://github.com/ccforward/C-Header)
+
+![](http://ww2.sinaimg.cn/large/7853084cjw1f6wvzw1utxj208w0bhjrp.jpg)
+
+## 知乎日报的API
+
+### 1、启动界面图像
+
+* URL `http://news-at.zhihu.com/api/4/start-image/1080*1776`
+* 图像分辨:
+	* 320*432
+	* 480*728
+	* 720*1184
+	* 1080*1776
+
+现在返回的图片应该都不再区分分辨率，都是同一尺寸了
+	
+### 2、最新消息
+* URL `http://news-at.zhihu.com/api/4/news/latest`
+
+
+### 3、历史消息
+* URL `http://news.at.zhihu.com/api/4/news/before/20150101`
+* 请求 20150101 返回 2014年12月31日 的内容
+* 请求日期大于今日 返回今日的内容
+
+### 4、文章详情内容
+* URL `http://news-at.zhihu.com/api/4/news/4620055`
+* 参数： 最新消息和历史消息返回的字段: id
+* 返回信息：
+	* body： HTML格式的详情文章
+	* title：文只标题
+	* image：文章顶部的大图
+	* image-source：图片的版权信息
+* 特殊情况：
+	* `http://news-at.zhihu.com/api/4/story/3942319`
+	* 来自之乎日报站外的内容
+	* 返回的字段 没有body、img、image-source等字段
+	* share_url 字段会跳转到站外文章
+
+#### 4.1、文章详情的点赞数、长评论、短评论数量
+* URL `http://news-at.zhihu.com/api/4/story-extra/7033320`
+* 返回信息：
+	* long_comments： 长评论
+	* popularity：点赞数
+	* short_comments：短评论数
+	* comments：总评论数
+
+### 5、文章长评论
+* URL `http://news-at.zhihu.com/api/4/story/4628696/long-comments` 
+* story后面即为文章的id
+
+### 6、文章短评论
+* URL `http://news-at.zhihu.com/api/4/story/4628696/short-comments` 
+
+### 7、主题日报的列表
+* URL `http://news-at.zhihu.com/api/4/themes`
+
+### 8、主题日报内容
+* URL `http://news-at.zhihu.com/api/4/theme/2`
+
+
+
+
+

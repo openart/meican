@@ -1,0 +1,44 @@
+<%- include("./common/header.ejs") %>
+<link rel="stylesheet" href="/statis/vendor.css">
+<link rel="stylesheet" href="/statis/month.css">
+
+<h1><span id="dmonth"><%= month %></span> 知乎日报最热文章统计</h1>
+<div class="app">
+
+    <div class="nav-link">
+        <a class="l-prev" target="_self" href="#">...</a>
+        <a class="l-next" target="_self" href="#">...</a>
+    </div>
+    <div class="statis-data">
+        <div class="chart-container">
+            <div class="statis-chart" id="star-comment"></div>
+            <div class="statis-chart sum" id="star-comment-sum"></div>
+        </div>
+
+        <div class="article-container">
+            <p class="sum-title">
+                当月点赞总数: <strong id="sum-s" class="txt-s">...</strong>   
+                评论总数: <strong id="sum-c" class="txt-c">...</strong>  
+            </p>
+            <p class="explain-tips">文章详情页滑到底部查看评论</p>
+            <div>
+                <p class="top-title">点赞 TOP 10</p>
+                <ol class="star-top"></ol>
+            </div>
+
+            <div>
+                <p class="top-title">评论 TOP 10</p>
+                <ol class="comment-top"></ol>
+            </div>
+        </div>
+    </div>
+
+    <a target="_self" href="/statistics"><<返回统计首页</a>
+</div>
+
+<div class="loading"></div>
+
+<script src="/statis/vendor.js"></script>
+<script src="/statis/month.bundle.js"></script>
+<%- include("./common/baidu.ejs") %>
+<%- include("./common/footer.ejs") %>

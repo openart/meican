@@ -1,0 +1,79 @@
+<%- include("./common/header.ejs") %>
+<link rel="stylesheet" href="/statis/vendor.css">
+<link rel="stylesheet" href="/statis/year.css">
+
+<h1><span id="dyear"><%= year %></span> 知乎日报文章数据统计</h1>
+
+<div class="app">
+    <div class="statis-data">
+        <!-- 每月总数 -->
+        <div class="chart-container">
+            <div class="statis-chart" id="sum-all"></div>
+            <span class="explain-tips">点击日期查看当日所有文章</span>
+            <div class="year-max-desc">
+                <p id="sum-star-count">全年点赞总次数：<strong class="txt-s">...</strong></p>
+                <p class="max-year">
+                    <%= year %>点赞最多文章: <span id="max-year-star">...</span>
+                </p>
+                <p id="sum-cmt-count">全年评论总条数：<strong class="txt-c">...</strong></p>
+                <p class="max-year">
+                    <%= year %>评论最多文章: <span id="max-year-cmt">...</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="month-container">
+            <p>查看每月统计数据</p>
+            <div id="month-list">...</div>
+        </div>
+
+        <div class="top-container">
+            <h2 class="top-title"><%= year %> 高人气文章</h2>
+            <span class="explain-tips">点击日期查看当日所有文章</span>
+            <div class="top-item twentyk">
+                <p class="top-desc txt-s">点赞大于20k<i class="count">...</i></p>
+                <ul class="top-links">...</ul>
+            </div>
+
+            <div class="top-item tenk">
+                <p class="top-desc txt-s">点赞大于10k<i class="count">...</i></p>
+                <ul class="top-links">...</ul>
+            </div>
+
+            <div class="top-item onek">
+                <p class="top-desc txt-c">评论大于1k<i class="count">...</i></p>
+                <ul class="top-links">...</ul>
+                <span class="explain-tips">文章详情页滑到底部查看评论</span>
+            </div>
+        </div>
+
+        <h2 class="txt-s">每月获得最多点赞的文章</h2>
+        <!-- 每月最高点赞文章  -->
+        <div class="chart-container">
+            <div class="statis-chart" id="top-star"></div>
+            <div class="article-container">
+                <p class="top-title">每月点赞Max</p>
+                <ol id="star-articles"></ol>
+            </div>
+        </div>
+
+        <h2 class="txt-c">每月获得最多评论的文章</h2> 
+        <!-- 每月最高点赞文章  -->
+        <div class="chart-container">
+            <div class="statis-chart" id="top-cmt"></div>
+            <div class="article-container">
+                <p class="top-title">每月评论Max</p>
+                <ol class="cmt-articles" id="cmt-articles"></ol>
+                <span class="explain-tips">文章详情页滑到底部查看评论</span>
+            </div>
+        </div>
+    </div>
+    <a target="_self" href="/statistics"><<返回统计首页</a>
+</div>
+
+<div class="loading"></div>
+
+<script src="/statis/vendor.js"></script>
+<script src="/statis/year.bundle.js"></script>
+<%- include("./common/baidu.ejs") %>
+<%- include("./common/footer.ejs") %>

@@ -25,7 +25,7 @@ const utils = {
       result_info: 'ok',
       result_rows: data || {}
     }
-  },
+  }
 }
 
 const API = {

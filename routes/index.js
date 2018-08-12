@@ -1,38 +1,12 @@
 var express = require('express')
 var router = express.Router()
 
-let sd = require('silly-datetime');
-
-var Login = require('../controller/login')
-var sendEmail = require('../controller/sendEmail')
-
-const home = require('../controller/home')
 const api = require('../controller/api')
+const reverse = require('../controller/reverse')
 const auth = require('../controller/auth')
 
-/* GET home page. */
-router.get('/', home.index)
-
-/* GET home page. */
-router.get('/login', home.login)
-
-/**用户基础信息，实时查询 */
-router.get('/user/info', home.userInfo)
-
-/**用户列表 */
-router.get('/user/list', home.userList)
-
-/**用户预约 */
-router.get('/user/reverse', home.userReverse)
-
-/**订单预约 */
-router.get('/order/reverse', home.orderReverse)
-
-/**用户设置信息 */
-router.get('/setting', home.userSetting)
-
-/**关于 */
-router.get('/about', home.about)
+/**判断用户是否登录 */
+router.get('/api/auth/isLogin', api.queryFoodListById)
 
 /**根据餐厅id查询食品列表 */
 router.get('/api/queryFoodListById', api.queryFoodListById)
@@ -48,5 +22,17 @@ router.get('/api/submitSetting', api.submitSetting)
 
 /**根据餐品名称模糊查询食品列表 */
 router.get('/api/queryFoodListByName', api.queryFoodListByName)
+
+/**预约相关 */
+router.get('/reverse/queryDates', reverse.queryDates)
+router.get('/reverse/queryDishs', reverse.queryDishs)
+router.get('/reverse/queyrFoodListByDishId', reverse.queyrFoodListByDishId)
+router.get('/reverse/submitOrderReverse', reverse.submitOrderReverse)
+router.get('/reverse/queryFoodListByName', reverse.queryFoodListByName)
+router.get('/reverse/queryUserReverse', reverse.queryUserReverse)
+
+/** 登录相关 */
+router.get('/auth/login', auth.login)
+router.get('/auth/isLogin', auth.isLogin)
 
 module.exports = router
