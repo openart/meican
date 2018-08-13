@@ -45,8 +45,6 @@ async function checkIn(account) {
   dishId = dishId ? dishId : dataBase.queryRegularDish()
   tag = tag ? tag : '随机'
 
-  console.log(tag)
-
   let params = {
     corpAddressRemark: '',
     corpAddressUniqueId: Config.spider.corpAddressUniqueId,
