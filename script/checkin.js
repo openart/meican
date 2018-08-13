@@ -119,7 +119,7 @@ async function beginTask() {
     let reverseTxt = '<a href="http://10.1.19.174:3001/order/reverse">美餐点餐提醒</a>'
 
     workWx.send({
-      user: user,
+      user: user.split('@')[0],
       description: reverseTxt + '\r\n' + result
     })
   }
