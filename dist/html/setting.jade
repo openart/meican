@@ -1,0 +1,18 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/./css/setting-f8f4cf0cf9.css')
+
+block content
+  ul(class='list')
+    li(class='bdr-bottom')
+      span 企业微信通知
+      div(class='item-r')
+        div(class = data.wx_notice ? 'on' : '' class='switch fr' data-key='wx_notice')
+    li(class='bdr-bottom')
+      span 自动点餐
+      div(class='item-r')
+        div(class = data.auto_checkin ? 'on' : '' class='switch fr' data-key='auto_checkin')
+
+block js
+  script(src='/./js/setting-c5b1e9e764.js')

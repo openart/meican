@@ -1,0 +1,13 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/./css/user_list-46b8086b8c.css')
+
+block content
+  section(class='list')
+    ul
+      - for (var i = 0; i < list.length; ++i) {
+          li(class='bdr-bottom') #{list[i].user}
+      - }
+block js
+  script(src='/./js/user_list-8971778a9c.js')

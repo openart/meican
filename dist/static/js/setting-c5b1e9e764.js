@@ -1,0 +1,1 @@
+"use strict";$(function(){index.init()});var index={init:function(){this.bindEvent()},bindEvent:function(){$("body").on("click",".switch",this.switchPower)},switchPower:function(){var t=this,i={k:$(this).data("key"),v:$(this).hasClass("on")?0:1};$.ajax({url:"/api/submitSetting",data:i,success:function(i){$(t).toggleClass("on")}})}};

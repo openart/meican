@@ -1,0 +1,22 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/./css/user_info-37885f7d59.css')
+
+block content
+  ul(class='user-list')
+    li(class='bdr-bottom')
+      span 标示码
+      div #{data.uniqueId}
+    li(class='bdr-bottom')
+      span 用户名
+      div #{data.username}
+    li(class='bdr-bottom')
+      span 用户类型
+      div #{data.userType}
+    li(class='bdr-bottom')
+      span 手机号码
+      div #{data.mobileAccount.mobileNumber}
+    li(class='bdr-bottom')
+      span 邮箱
+      div #{data.nameForShow}

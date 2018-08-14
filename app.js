@@ -5,13 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-const Task=require('./script/')
+const Task = require('./script/')
 
 var app = express();
 var ejs = require('ejs');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+//app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'dist/html'));
+
 // app.engine('html', ejs.__express);
 app.set('view engine', 'jade');
 
@@ -22,7 +24,11 @@ app.use(express.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
+/**开发环境 */
 app.use(express.static(path.join(__dirname, 'static')));
+
+/**线上环境 */
+app.use(express.static(path.join(__dirname, 'dist/static')));
 
 app.use('/', indexRouter);
 

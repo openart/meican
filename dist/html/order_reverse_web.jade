@@ -1,0 +1,28 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/./css/order_reverse_web-a726d4a90b.css')
+
+block content
+  section(class='wrap')
+    div(class='opt')
+      span 日期
+      ul(class='date' id='date')
+        - for (var i = 0; i < dates.length; ++i) {
+            li(class= - i==0 ? "active" : "" value=dates[i].k) #{dates[i].v}
+        - }
+    div(class='opt')
+      span 餐厅
+      ul(id='dish')
+        - for (var i = 0; i < dishs.length; ++i) {
+            li(class= - i==0 ? "active" : "" value=dishs[i].uniqueId) #{dishs[i].name}
+        - }
+    div(class='opt')
+      span 搜索
+      input(id='search' placeholder='请输入喜欢的餐品')
+    ul(id='food_list' class='food-list')
+  div(class='btn-wrap')
+    a(class='btn_submit btn-reverse js-submit-food') 预约
+    a(class='btn_submit btn-favorite js-submit-favorite') 收藏
+block js
+  script(src='/./js/order_reverse_web-7ea750b8c7.js')

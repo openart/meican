@@ -1,0 +1,1 @@
+"use strict";$(function(){index.init()});var index={init:function(){this.bindEvent()},bindEvent:function(){$("body").on("click",".js-cancel-favorite",this.switchFavorite)},switchFavorite:function(){var t=this,i={id:$(this).data("id"),checked:$(this).hasClass("checked")?0:1};$.ajax({url:"/api/switchFavorite",data:i,success:function(i){$(t).toggleClass("checked")}})}};
