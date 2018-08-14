@@ -8,6 +8,7 @@ const rev = require('gulp-rev')
 const revCollector = require('gulp-rev-collector')
 
 const runSequence = require('run-sequence')
+const del = require('del')
 
 /**
  * 压缩js
@@ -77,11 +78,21 @@ gulp.task('rev:jade', function () {
 })
 
 /**
+ * 删除rev文件夹
+ */
+gulp.task('clean:rev', function () {
+  return del([
+    'dist/rev'
+  ]);
+})
+
+/**
  * 执行打包任务
  */
 gulp.task('build', function (callback) {
   runSequence(['task:js', 'task:css', 'task:img'],
     'rev:css',
     'rev:jade',
+    'clean:rev',
     callback);
 });
