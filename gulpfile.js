@@ -38,10 +38,22 @@ gulp.task('task:img', () => {
 })
 
 /**
+ * 替换原css中的图片,输出到cache文件夹
+ */
+
+gulp.task('rev:css', () => {
+  return gulp.src(['./dist/rev/img/*', './static/css/*.css'])
+    .pipe(revCollector({
+      replaceReved: true,
+    }))
+    .pipe(gulp.dest('dist/cache/css'))
+})
+
+/**
  * 压缩css
  */
 gulp.task('task:css', () => {
-  return gulp.src('./static/css/*.css')
+  return gulp.src('dist/cache/css/*.css')
     .pipe(cleanCSS())
     .pipe(rev())
     .pipe(gulp.dest('dist/static/css'))
@@ -49,17 +61,7 @@ gulp.task('task:css', () => {
     .pipe(gulp.dest('dist/rev/css'))
 })
 
-/**
- * 替换css中的图片
- */
 
-gulp.task('rev:css', () => {
-  return gulp.src(['./dist/rev/img/*', './dist/static/css/*.css'])
-    .pipe(revCollector({
-      replaceReved: true,
-    }))
-    .pipe(gulp.dest('dist/static/css'))
-})
 
 /**
  * 替换jade中的元素
@@ -82,7 +84,8 @@ gulp.task('rev:jade', function () {
  */
 gulp.task('clean:rev', function () {
   return del([
-    'dist/rev'
+    'dist/rev',
+    'dist/cache'
   ]);
 })
 
@@ -90,9 +93,10 @@ gulp.task('clean:rev', function () {
  * 执行打包任务
  */
 gulp.task('build', function (callback) {
-  runSequence(['task:js', 'task:css', 'task:img'],
+  runSequence('task:img',
     'rev:css',
+    ['task:css', 'task:js'],
     'rev:jade',
     'clean:rev',
-    callback);
+    callback)
 });

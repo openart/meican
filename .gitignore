@@ -5,6 +5,9 @@ config/private.js
 # 微信发送api
 controller/workWx.js
 
+# 打包文件
+dist/
+
 # Logs
 logs
 *.log

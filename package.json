@@ -7,6 +7,7 @@
     "dish": "node  ./script/dish",
     "forever": "forever start -a -l forever.log -o log/out.log -e log/err.log ./bin/www",
     "stop": "forever stop  ./bin/www",
+    "pm2": "pm2 start ./bin/www",
     "test": "node  ./script/test"
   },
   "dependencies": {
