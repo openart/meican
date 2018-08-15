@@ -7,7 +7,7 @@
     "dish": "node  ./script/dish",
     "forever": "forever start -a -l forever.log -o log/out.log -e log/err.log ./bin/www",
     "stop": "forever stop  ./bin/www",
-    "pm2": "pm2 start ./bin/www",
+    "pm2": "pm2 start ./bin/www -f -o log/out-p.log -e log/err-p.log --merge-logs --log-date-format='YYYY-MM-DD HH:mm Z'",
     "test": "node  ./script/test"
   },
   "dependencies": {

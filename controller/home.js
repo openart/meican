@@ -193,7 +193,7 @@ const Home = {
     for (let k in obj) {
       list.push({
         dish_id: k,
-        checked: obj[k].hasOwnProperty('checked') ? +obj[k].checked : 1
+        checked: +obj[k].checked
       })
     }
     list = list.map((v) => {
