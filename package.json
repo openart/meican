@@ -7,7 +7,7 @@
     "dish": "node  ./script/dish",
     "forever": "forever start -a -l forever.log -o log/out.log -e log/err.log ./bin/www",
     "stop": "forever stop  ./bin/www",
-    "pm2": "pm2 start ./bin/www -f -o log/out-p.log -e log/err-p.log --merge-logs --log-date-format='YYYY-MM-DD HH:mm Z'",
+    "pm2": "pm2 start ./bin/www -o log/out-p.log -e log/err-p.log --merge-logs --log-date-format='YYYY-MM-DD/HH:mm'",
     "test": "node  ./script/test"
   },
   "dependencies": {
@@ -39,6 +39,7 @@
     "gulp-babel": "^7.0.1",
     "gulp-clean-css": "^3.10.0",
     "gulp-jade": "^1.1.0",
+    "gulp-obfuscate": "^0.2.9",
     "gulp-rev": "^8.1.1",
     "gulp-rev-collector": "^1.3.1",
     "gulp-uglify": "^3.0.1",

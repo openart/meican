@@ -1,13 +1,27 @@
 const gulp = require('gulp')
+
+/**压缩文件 */
 const uglify = require('gulp-uglify')
+
+/**es6 */
 const babel = require('gulp-babel')
+
+/**压缩css */
 const cleanCSS = require('gulp-clean-css')
+
+/**日志文件 */
 const gutil = require('gulp-util')
+
+/**生成枚举文件 */
 const rev = require('gulp-rev')
 
+/**替换静态文件 */
 const revCollector = require('gulp-rev-collector')
 
+/**单步执行 */
 const runSequence = require('run-sequence')
+
+/**删除文件夹 */
 const del = require('del')
 
 /**
@@ -69,7 +83,7 @@ gulp.task('task:css', () => {
 gulp.task('rev:jade', function () {
   return gulp.src(['./dist/rev/**/*.json', './views/*.jade'])
     .pipe(revCollector({
-      replaceReved: true,//允许替换, 已经被替换过的文件
+      replaceReved: true, //允许替换, 已经被替换过的文件
       dirReplacements: {
         'css': './css',
         'js': './js',
@@ -77,6 +91,15 @@ gulp.task('rev:jade', function () {
       }
     }))
     .pipe(gulp.dest('dist/html'))
+})
+
+/**
+ * 删除dist文件夹
+ */
+gulp.task('clean:dist', function () {
+  return del([
+    'dist',
+  ]);
 })
 
 /**
@@ -93,9 +116,8 @@ gulp.task('clean:rev', function () {
  * 执行打包任务
  */
 gulp.task('build', function (callback) {
-  runSequence('task:img',
-    'rev:css',
-    ['task:css', 'task:js'],
+  runSequence('clean:dist', 'task:img',
+    'rev:css', ['task:css', 'task:js'],
     'rev:jade',
     'clean:rev',
     callback)

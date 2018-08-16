@@ -37,10 +37,10 @@ const Home = {
     })
   },
   /**
-  * 登入
-  * @param {context} req 
-  * @param {context} res 
- */
+   * 登入
+   * @param {context} req 
+   * @param {context} res 
+   */
   login(req, res) {
     res.render('login', {
       title: '登录'
@@ -176,8 +176,8 @@ const Home = {
   },
 
   /**
- * 用户预约收藏
- */
+   * 用户预约收藏
+   */
   async userFavorite(req, res) {
     let login = await Auth.login(req)
     if (!login) {
@@ -191,6 +191,7 @@ const Home = {
     let obj = dataBase.queryUserFavorite(user)
     let list = []
     for (let k in obj) {
+      if (!+obj[k].checked) continue
       list.push({
         dish_id: k,
         checked: +obj[k].checked
