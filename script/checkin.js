@@ -158,6 +158,7 @@ CheckIn.prototype = {
       /**获取餐品id */
       let dish = this.queryDishId(user)
       let result = await this.checkIn(userList[i], dish.id)
+      console.log(dish)
       //console.log(result)
 
       /**如果用户餐品过期，则将收藏的id设置为已过期，并加入补偿列表中 */
