@@ -202,7 +202,7 @@ let DataBase = {
 
     /**过滤掉用户取消收藏的部分 */
     list = list.filter((v) => {
-      return +obj[v].checked === 1
+      return +obj[v].checked === 1 && +obj[v].valid === 1
     })
 
     /**随机浮动 */
