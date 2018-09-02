@@ -137,7 +137,8 @@ let DataBase = {
 
     let data = params.data || {}
     obj[data.food] = {
-      checked: 1
+      checked: 1,
+      valid: 1
     }
 
     /**写入数据库 */
@@ -303,7 +304,34 @@ let DataBase = {
       obj = JSON.parse(txt)
     }
 
-    obj[params.id].checked = params.checked
+    obj[params.id].checked = +params.checked
+
+    /**写入数据库 */
+    fs.writeFileSync(path, JSON.stringify(obj))
+  },
+  /**
+   * 修改收藏的状态
+   * @param {*} params 设置参数对象
+   */
+  setNoValid(params) {
+    let fileNmae = params.user
+    let path = Path.my_favorite + fileNmae
+
+    /**
+     * 判断文件是否存在
+     * 存在就读取里面内容
+     * 不存在则直接写入
+     */
+    let isexists = fs.existsSync(path)
+    let obj = {}
+    if (isexists) {
+      /**读取文件内容 */
+      let txt = fs.readFileSync(path)
+      obj = JSON.parse(txt)
+    }
+
+    if (!obj[params.id]) return false
+    obj[params.id].valid = 0
 
     /**写入数据库 */
     fs.writeFileSync(path, JSON.stringify(obj))

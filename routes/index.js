@@ -1,14 +1,8 @@
 var express = require('express')
 var router = express.Router()
 
-let sd = require('silly-datetime');
-
-var Login = require('../controller/login')
-var sendEmail = require('../controller/sendEmail')
-
 const home = require('../controller/home')
 const api = require('../controller/api')
-const auth = require('../controller/auth')
 
 /* GET home page. */
 router.get('/', home.index)

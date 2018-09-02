@@ -5,7 +5,7 @@ let arguments = process.argv.splice(2);
 console.log(+arguments[0])
 
 
-
+const fs = require('fs')
 const dataBase = require('../controller/dataBase')
 const message = require('./message')
 const workWx = require('../controller/workWx')
@@ -32,6 +32,8 @@ switch (+arguments[0]) {
   case 7:
     resetSetting()
     break
+  case 8:
+    wishFavData()
 }
 
 /**
@@ -102,4 +104,21 @@ function testConfig() {
 function resetSetting() {
   const Setting = require('../script/setting')
   Setting.reset()
+}
+
+function wishFavData() {
+  const path = require('../config').path
+  let files = fs.readdirSync(path.my_favorite)
+  for (let i = 0; i < files.length; i++) {
+    let p = path.my_favorite + files[i]
+
+    let txt = fs.readFileSync(p)
+    obj = JSON.parse(txt)
+    for (let k in obj) {
+      obj[k].valid = 1
+    }
+
+    /**写入数据库 */
+    fs.writeFileSync(p, JSON.stringify(obj))
+  }
 }

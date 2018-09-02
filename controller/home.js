@@ -194,7 +194,8 @@ const Home = {
       if (!+obj[k].checked) continue
       list.push({
         dish_id: k,
-        checked: +obj[k].checked
+        checked: +obj[k].checked,
+        valid: +obj[k].valid
       })
     }
     list = list.map((v) => {

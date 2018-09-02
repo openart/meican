@@ -18,7 +18,7 @@ block content
                 span #{list[i].dish_name}
               li
                 span 是否过期：
-                span 否
+                span #{+list[i].valid ? '否' : '是'}
       - }
   - else
     div(class='empty-list')

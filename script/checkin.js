@@ -70,6 +70,8 @@ CheckIn.prototype = {
    * @param {String} dishId 餐品ID
    */
   async checkIn(account, dishId) {
+    /**日志分割线 */
+    console.log('-----------------' + account.user + '-----------------')
     /**获取当前的时间（年月日） */
     let date = sd.format(new Date(), 'YYYY-MM-DD')
     let targetTime = date + ' 17:00'
@@ -107,6 +109,9 @@ CheckIn.prototype = {
               error_description: '美餐服务异常或登录态丢失，请至网页或者app点餐'
             }
           }
+
+          // 日志：点餐人、入餐、出餐
+          console.log(account.user + '|' + JSON.stringify(params) + '|' + JSON.stringify(body))
           // 获取餐品名称
           let status = '', desc = ''
           switch (body.status) {
@@ -164,6 +169,13 @@ CheckIn.prototype = {
           msg = `订餐人：${result.user}\r\n订单状态：成功\r\n来源：${type === 1 ? '预约' : (type === 2 ? '收藏' : '随机')}\r\n餐品id：${result.id}\r\n餐品名称：${result.name}`
           break
         case 'expired':
+          /**设置餐品过期 */
+          if (type === 2) {
+            dataBase.setNoValid({
+              user: result.user,
+              id: result.id
+            })
+          }
           this.makUpUsers.push(userList[i])
           msg = `订餐人：${result.user}\r\n订单状态：失败\r\n失败原因：${result.desc}，脚本将在批跑完成之后补偿`
           break
@@ -176,7 +188,7 @@ CheckIn.prototype = {
       /**发送微信 */
       if (!setting.wx_notice) continue
 
-      workWx.send({
+      await workWx.send({
         user: user.split('@')[0],
         description: msg
       })
@@ -203,9 +215,7 @@ CheckIn.prototype = {
 
       /**获取成功餐品列表的随机id */
       let id = this.queryRandomSucDishId()
-      console.log(id)
       let result = await this.checkIn(userList[i], id)
-      console.log(result)
 
       /**如果用户餐品过期，则将收藏的id设置为已过期，并加入补偿列表中 */
       let msg = ''
@@ -223,7 +233,8 @@ CheckIn.prototype = {
       let setting = dataBase.queryUserSetting(user)
       if (!setting.wx_notice) continue
 
-      workWx.send({
+      /**发送企业微信 */
+      await workWx.send({
         user: user.split('@')[0],
         description: msg
       })
