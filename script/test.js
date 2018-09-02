@@ -38,8 +38,8 @@ switch (+arguments[0]) {
  * 点餐脚本测试
  */
 function checkIn() {
-  const CheckIn = require('../script/checkin')
-  CheckIn.begin()
+  const checkIn = require('../script/checkin')
+  checkIn.begin()
 }
 
 
@@ -49,8 +49,8 @@ function checkIn() {
 function sendEmail() {
   let config = require('../config/')
   let user = config.admin.join(',')
-  const sendEmail = require('../controller/sendEmail')
-  sendEmail({
+  const email = require('../controller/email')
+  email.send({
     title: '美餐邮件',
     content: ' 成功\r\n哈哈',
     toUser: user
