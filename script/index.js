@@ -38,7 +38,7 @@ const Task = {
     /**每周一上午10:30提醒用户点餐 */
     new CronJob('00 30 10 * * 1', function () {
       let params = {
-        message: '美餐点餐提醒\r\n在电脑上点击即可预定一周的美食\r\n<a href="http://10.1.19.174:3001/order/reverse">开始点餐</a>'
+        message: '在电脑上点击即可预定一周的美食\r\n<a href="http://10.1.19.174:3001/order/reverse">开始点餐</a>'
       }
       Message.send(params)
     }, null, true, 'Asia/Shanghai')
