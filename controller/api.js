@@ -52,8 +52,6 @@ const API = {
 
         let cookie = decodeURIComponent(result_rows.value.join()).split(';')
 
-        let remember = ''
-
         cookie.forEach((val) => {
           let item = val.split('=')
           let k = item[0],
@@ -67,11 +65,8 @@ const API = {
         query.uniqueId = result_rows.uniqueId
         query.expires = expires
 
-        /** 判断如果用户不存在保存数据 */
-        let user = dataBase.queryUserInfoByUser(query.user)
-        if (user.length == 0) {
-          dataBase.updateUser(query)
-        }
+        /** 更新用户数据 */
+        dataBase.updateUser(query)
 
         // 返回数据
         res.send(data)

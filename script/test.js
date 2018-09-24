@@ -34,6 +34,13 @@ switch (+arguments[0]) {
     break
   case 8:
     wishFavData()
+  case 9:
+    wishUserData()
+  case 10:
+    checkCalendar()
+    break
+  case 11:
+    queryHoliday()
 }
 
 /**
@@ -120,5 +127,46 @@ function wishFavData() {
 
     /**写入数据库 */
     fs.writeFileSync(p, JSON.stringify(obj))
+  }
+}
+
+function wishUserData() {
+  const path = require('../config').path
+  let userList = dataBase.queryUserList()
+  fs.writeFileSync(path.newuser, JSON.stringify(userList))
+}
+
+function checkCalendar() {
+  const calendar = require('./calendar')
+  calendar.checkCalendar()
+}
+
+function queryHoliday() {
+  let holiday = dataBase.queryHoliday()
+  const sd = require('silly-datetime')
+  let date = sd.format(new Date(), 'YYYY-M-DD')
+  date = '2018-9-24'
+  let today = holiday.filter(v => {
+    return v.date === date
+  })
+  if (today.length > 0) {
+    let item = today[0]
+    let status = parseInt(item.status)
+    switch (status) {
+      case 1:
+        console.log('sendmessage')
+        let params = {
+          message: `今天是${item.name}，脚本将不执行自动点餐，如有需要，请至美餐app中手动点取，大家假期愉快\r\n${item.desc}\r\n${item.rest}`
+        }
+        console.log(params)
+        message.send(params)
+        break
+      case 2:
+        console.log('checkin')
+    }
+  } else {
+    let day = new Date().getDay()
+    if ([1, 2, 3, 4, 5].indexOf(day) === -1) return
+    console.log('checkin')
   }
 }

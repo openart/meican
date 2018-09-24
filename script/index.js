@@ -6,12 +6,40 @@ const Spider = require('./spider')
 const Message = require('./message')
 const workWx = require('../controller/WorkWx')
 const Setting = require('./setting')
+const Calendar = require('./calendar')
 
 const Task = {
   begin() {
-    /**每周一到周五下午16:00点餐 */
-    new CronJob('00 00 15 * * 1-5', function () {
-      CheckIn.begin()
+    /**
+     * 如果是节假日，返回
+     * 补休，则点餐
+     * 周一到周五
+     */
+    new CronJob('00 00 15 * * *', function () {
+      let holiday = dataBase.queryHoliday()
+      let date = sd.format(new Date(), 'YYYY-M-DD')
+      let today = holiday.filter(v => {
+        return v.date === date
+      })
+      if (today.length > 0) {
+        let item = today[0]
+        let status = parseInt(item.status)
+        switch (status) {
+          case 1:
+            let params = {
+              message: `今天是${item.name}，脚本将不执行自动点餐，如有需要，请至美餐app中手动点取，大家假期愉快\r\n${item.desc}\r\n${item.rest}`
+            }
+            Message.send(params)
+            break
+          case 2:
+            CheckIn.begin()
+        }
+      } else {
+        // 周一到周五执行点餐
+        let day = new Date().getDay()
+        if ([1, 2, 3, 4, 5].indexOf(day) === -1) return
+        CheckIn.begin()
+      }
     }, null, true, 'Asia/Shanghai')
 
     /**每周一到周五上午10:00爬取数据 */
@@ -54,6 +82,11 @@ const Task = {
     /**每周五下午16:00重置setting类 */
     new CronJob('00 00 16 * * 5', function () {
       Setting.reset()
+    }, null, true, 'Asia/Shanghai')
+
+    /**每月1号8点更新本月日历信息 */
+    new CronJob('00 00 08 1 * *', function () {
+      Calendar.checkCalendar()
     }, null, true, 'Asia/Shanghai')
   }
 }

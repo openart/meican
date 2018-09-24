@@ -1,6 +1,7 @@
 /**node资源库 */
 let fs = require('fs')
 const path = require('path')
+const sd = require('silly-datetime')
 extend = require('extend')
 
 /**配置文件 */
@@ -15,8 +16,22 @@ let DataBase = {
    * @param {Object} params
    */
   updateUser(params) {
-    let userStr = params.user + ' ' + params.remember + ' ' + params.expires + ' ' + params.uniqueId + '\r'
-    fs.appendFileSync(Path.user, userStr)
+    let userList = this.queryUserList()
+    let user = this.queryUserInfoByUser(params.user)
+    let item = {
+      user: params.user,
+      remember: params.remember,
+      expires: params.expires,
+      uniqueId: params.uniqueId
+    }
+    // 存在则更新，如没有，则新增
+    if (user.length > 0) {
+      let index = userList.indexOf(user[0])
+      userList.splice(index, 1, item)
+    } else {
+      userList.push(item)
+    }
+    fs.writeFileSync(Path.user, JSON.stringify(userList))
   },
 
   /**
@@ -34,24 +49,12 @@ let DataBase = {
     if (!file) return []
 
     /**初始化用户数组 */
-    let userList = []
-    let list = file.split('\r')
-    for (let i = 0; i < list.length; i++) {
-      let items = list[i].replace('\n', '').split(' ')
-      if (items.length != 4) continue
-
-      /**判断是否测试环境，实时拉取数据 */
-      const config = require('../config/')
-      if (config.is_test && config.test_user.indexOf(items[0]) == -1) continue
-
-      /**将当前用户插入数组中 */
-      userList.push({
-        user: items[0],
-        remember: items[1],
-        expires: items[2],
-        uniqueId: items[3]
-      })
-    }
+    let list = JSON.parse(file)
+    const config = require('../config/')
+    if (!config.is_test) return list
+    let userList = list.filter((v) => {
+      return config.test_user.indexOf(v.user) > -1
+    })
     return userList
   },
   /**
@@ -335,6 +338,29 @@ let DataBase = {
 
     /**写入数据库 */
     fs.writeFileSync(path, JSON.stringify(obj))
+  },
+  /**
+   * 查询指定年月的假期
+   * @param {String} date 日期
+   */
+  queryHoliday(date) {
+    date = date ? date : sd.format(new Date(), 'YYYY-MM')
+    console.log(date)
+    let path = Path.calendar + date
+    let isexists = fs.existsSync(path)
+    if (!isexists) return []
+    let txt = fs.readFileSync(path)
+    obj = JSON.parse(txt)
+    let holiday = obj.holiday.map((v) => {
+      let list = v.list.map((val) => {
+        val.name = v.name
+        val.rest = v.rest
+        val.desc = v.desc
+        return val
+      })
+      return list
+    })
+    return [].concat.apply([], holiday)
   }
 }
 

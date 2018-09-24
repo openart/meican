@@ -10,7 +10,8 @@ module.exports = {
     static_dishs: root + '/database/static_dishs',
     order_reverse: root + '/database/order_reverse/',
     my_favorite: root + '/database/my_favorite/',
-    setting: root + '/database/setting'
+    setting: root + '/database/setting',
+    calendar: root + '/database/calendar/'
   },
   host: {
     /**判断用户是否登录 */
@@ -34,6 +35,8 @@ module.exports = {
     /**下单接口 */
     checkin: 'https://meican.com/preorder/api/v2.1/orders/add',
     /**获取验证码，美餐登录页面 */
-    veritifyCode: 'https://meican.com/login'
+    veritifyCode: 'https://meican.com/login',
+    /** 爬取日历，每月1号执行 */
+    calendar: 'https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php'
   }
 }
