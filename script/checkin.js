@@ -106,7 +106,7 @@ CheckIn.prototype = {
 
             /**重定义异常文件 */
             body = {
-              error_description: '美餐服务异常或登录态丢失，请至网页或者app点餐'
+              error_description: '美餐服务异常或登录态丢失，请重新登录'
             }
           }
 

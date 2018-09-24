@@ -26,7 +26,12 @@ let DataBase = {
     }
     // 存在则更新，如没有，则新增
     if (user.length > 0) {
-      let index = userList.indexOf(user[0])
+      let index = (() => {
+        for (let k in userList) {
+          if (userList[k].user === user[0].user) return k
+        }
+        return -1
+      })()
       userList.splice(index, 1, item)
     } else {
       userList.push(item)
@@ -149,9 +154,9 @@ let DataBase = {
   },
 
   /**
- * 获取用户预约的订单列表
- * @param {String} user 
- */
+   * 获取用户预约的订单列表
+   * @param {String} user 
+   */
   queryUserReverse(user) {
     /**用户预约文件存放地址 */
     let isexists = fs.existsSync(Path.user)
@@ -250,7 +255,7 @@ let DataBase = {
 
     try {
       obj = JSON.parse(txt)
-    } catch (e) { }
+    } catch (e) {}
 
     return extend(res, obj[user]) || res
   },
@@ -270,7 +275,7 @@ let DataBase = {
         let obj = {}
         try {
           return JSON.parse(txt)
-        } catch (e) { }
+        } catch (e) {}
         return {}
       })()
     }

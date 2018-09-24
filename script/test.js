@@ -36,6 +36,7 @@ switch (+arguments[0]) {
     wishFavData()
   case 9:
     wishUserData()
+    break
   case 10:
     checkCalendar()
     break
@@ -138,7 +139,10 @@ function wishUserData() {
 
 function checkCalendar() {
   const calendar = require('./calendar')
-  calendar.checkCalendar()
+  calendar.checkCalendar('2018-09')
+  calendar.checkCalendar('2018-10')
+  calendar.checkCalendar('2018-11')
+  calendar.checkCalendar('2018-12')
 }
 
 function queryHoliday() {
