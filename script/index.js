@@ -74,7 +74,7 @@ const Task = {
     /**每周五下午两点提醒用户是否关闭自动点餐 */
     new CronJob('00 30 14 * * 5', function () {
       let params = {
-        message: '鉴于每周五很多同学会回家吃饭，为避免资源的浪费，如果用户不需要点餐，可通过<a href="http://10.1.19.174:3001/setting">菜单--设置</a>选项取消自动点餐'
+        message: '鉴于周五很多同学会回家吃饭，为避免资源浪费，如不需要点餐，可通过<a href="http://10.1.19.174:3001/setting">菜单--设置</a>选项取消自动点餐'
       }
       Message.send(params)
     }, null, true, 'Asia/Shanghai')
