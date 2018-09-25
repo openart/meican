@@ -5,6 +5,7 @@ const CheckIn = require('./checkin')
 const Spider = require('./spider')
 const Message = require('./message')
 const workWx = require('../controller/WorkWx')
+const dataBase = require('../controller/dataBase')
 const Setting = require('./setting')
 const Calendar = require('./calendar')
 

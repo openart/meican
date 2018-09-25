@@ -6,6 +6,7 @@ console.log(+arguments[0])
 
 
 const fs = require('fs')
+const sd = require('silly-datetime')
 const dataBase = require('../controller/dataBase')
 const message = require('./message')
 const workWx = require('../controller/workWx')
@@ -42,6 +43,9 @@ switch (+arguments[0]) {
     break
   case 11:
     queryHoliday()
+    break
+  case 12:
+    testHoliday()
 }
 
 /**
@@ -172,5 +176,34 @@ function queryHoliday() {
     let day = new Date().getDay()
     if ([1, 2, 3, 4, 5].indexOf(day) === -1) return
     console.log('checkin')
+  }
+}
+
+// 测试节假日脚本
+function testHoliday() {
+  let holiday = dataBase.queryHoliday()
+  let date = sd.format(new Date(), 'YYYY-M-DD')
+  let today = holiday.filter(v => {
+    return v.date === date
+  })
+  if (today.length > 0) {
+    let item = today[0]
+    let status = parseInt(item.status)
+    switch (status) {
+      case 1:
+        let params = {
+          message: `今天是${item.name}，脚本将不执行自动点餐，如有需要，请至美餐app中手动点取，大家假期愉快\r\n${item.desc}\r\n${item.rest}`
+        }
+        console.log('发送信息')
+        break
+      case 2:
+        console.log('补休点餐')
+    }
+  } else {
+    // 周一到周五执行点餐
+    let day = new Date().getDay()
+    console.log(day)
+    if ([1, 2, 3, 4, 5].indexOf(day) === -1) return
+    console.log('正常周一至周五点餐')
   }
 }
