@@ -5,13 +5,14 @@ const root = process.cwd()
 module.exports = {
   path: {
     user: root + '/database/user',
-    all_dishs: root + '/database/all_dishs',
-    fav_dishs: root + '/database/fav_dishs',
+    all_dishs: root + '/database/all_dishs/',
+    fav_dishs: root + '/database/fav_dishs/',
     static_dishs: root + '/database/static_dishs',
     order_reverse: root + '/database/order_reverse/',
     my_favorite: root + '/database/my_favorite/',
     setting: root + '/database/setting',
-    calendar: root + '/database/calendar/'
+    calendar: root + '/database/calendar/',
+    order: root + '/database/order/'
   },
   host: {
     /**判断用户是否登录 */

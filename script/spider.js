@@ -27,7 +27,12 @@ Spider.prototype = {
       storeList[i].list = foods
     }
 
-    fs.writeFileSync(Config.path.all_dishs, JSON.stringify(storeList))
+    // 判断文件夹是否存在，如不存在，则新建
+    let path = Config.path.all_dishs
+    let isexists = fs.existsSync(path)
+    if (!isexists) fs.mkdirSync(path)
+    let file = sd.format(new Date(), 'YYYY-MM-DD')
+    fs.writeFileSync(path + file, JSON.stringify(storeList))
 
     /**同步更新静态资源餐饮文件 */
     this.updateStaticDishs(storeList)
@@ -149,7 +154,13 @@ Spider.prototype = {
             }
           })
 
-          fs.writeFileSync(Config.path.fav_dishs, JSON.stringify(dishList))
+          // 判断文件夹是否存在，如不存在，则新建
+          let path = Config.path.fav_dishs
+
+          if (!fs.existsSync(path)) fs.mkdirSync(path)
+
+          let file = sd.format(new Date(), 'YYYY-MM-DD')
+          fs.writeFileSync(path + file, JSON.stringify(dishList))
           let date = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
           console.log(date + '|' + '同事常点的餐品列表脚本执行成功')
         } else {

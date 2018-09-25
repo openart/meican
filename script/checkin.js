@@ -28,6 +28,8 @@ function CheckIn() {
   this.sucDishList = []
   // 邮件发送的消息列表
   this.emailMsg = []
+  // 订单数据库保存
+  this.orderList = []
 }
 
 CheckIn.prototype = {
@@ -42,6 +44,7 @@ CheckIn.prototype = {
     await this.beginTask()
     await this.makeUpTask()
     this.sendEmail()
+    this.saveOrder()
   },
   /**
    * @param {String} user 用户名（邮箱）
@@ -185,6 +188,16 @@ CheckIn.prototype = {
           break
       }
       this.emailMsg.push(msg)
+      let order = {
+        user: result.user,
+        status: result.status,
+        type: type,
+        dish_id: result.id,
+        dish_name: result.name,
+        desc: result.desc,
+        date: sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+      }
+      this.orderList.push(order)
 
       /**发送微信 */
       if (!setting.wx_notice) continue
@@ -229,6 +242,16 @@ CheckIn.prototype = {
           break
       }
       this.emailMsg.push(msg)
+      let order = {
+        user: result.user,
+        status: result.status,
+        type: type,
+        dish_id: result.id,
+        dish_name: result.name,
+        desc: result.desc,
+        date: sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+      }
+      this.orderList.push(order)
 
       /**发送微信 */
       let setting = dataBase.queryUserSetting(user)
@@ -250,6 +273,12 @@ CheckIn.prototype = {
       toUser: config.admin.join(','),
       content: this.emailMsg.join('\r\n' + '-----------------' + '\r\n')
     })
+  },
+  /**
+   * 保存数据到数据库中
+   */
+  saveOrder() {
+    dataBase.saveOrder(this.orderList)
   }
 }
 

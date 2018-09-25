@@ -78,11 +78,30 @@ let DataBase = {
   /**
    * 查询所有的餐品列表
    */
-  queryAlldishs() {
-    /**读取二进制文件 */
-    let file = fs.readFileSync(Path.all_dishs, 'utf-8')
+  queryAlldishs(date) {
+    date = date ? date : sd.format(new Date(), 'YYYY-MM-DD')
 
-    return JSON.parse(file)
+    // 当天的数据在早上10：00 爬取，如果用户在10点前访问，依次向前取5天数据
+    let file = Path.all_dishs + date
+    let isexists = fs.existsSync(file)
+    if (!isexists) {
+      file = (() => {
+        let d, p, e
+        for (let i = 0; i < 5; i++) {
+          d = (new Date).valueOf() - 24 * 60 * 60 * 1000 * (i + 1)
+          p = Path.all_dishs + sd.format(d, 'YYYY-MM-DD')
+          e = fs.existsSync(p)
+          if (e) return p
+        }
+        return ''
+      })()
+    }
+    if (!file) return []
+
+    /**读取二进制文件 */
+    let txt = fs.readFileSync(file, 'utf-8')
+
+    return JSON.parse(txt)
   },
   /**
    * 保存预约数据到数据库中
@@ -221,9 +240,11 @@ let DataBase = {
   /**
    * 获取同事常点的餐品
    */
-  queryRegularDish() {
-    let txt = fs.readFileSync(Path.fav_dishs)
+  queryRegularDish(date) {
+    date = date ? date : sd.format(new Date(), 'YYYY-MM-DD')
+    let txt = fs.readFileSync(Path.fav_dishs + date)
     let list = JSON.parse(txt)
+    if (list.length === 0) return ''
 
     let index = parseInt(Math.random() * list.length)
     return list[index].id || ''
@@ -255,7 +276,7 @@ let DataBase = {
 
     try {
       obj = JSON.parse(txt)
-    } catch (e) {}
+    } catch (e) { }
 
     return extend(res, obj[user]) || res
   },
@@ -275,7 +296,7 @@ let DataBase = {
         let obj = {}
         try {
           return JSON.parse(txt)
-        } catch (e) {}
+        } catch (e) { }
         return {}
       })()
     }
@@ -366,6 +387,19 @@ let DataBase = {
       return list
     })
     return [].concat.apply([], holiday)
+  },
+  /**
+   * 保存订单数据到数据库中
+   * @param {Array} data 订单数据
+   */
+  saveOrder(data) {
+    let date = sd.format(new Date(), 'YYYY-MM-DD')
+    /**判断文件夹是否存在，如不存在，则创建 */
+    if (!fs.existsSync(Path.order)) {
+      fs.mkdirSync(Path.order)
+    }
+    let path = Path.order + date
+    fs.writeFileSync(path, JSON.stringify(data))
   }
 }
 
