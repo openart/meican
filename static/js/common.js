@@ -35,17 +35,28 @@ utils.hideToast = function () {
  */
 
 function initMenuEvent() {
-  $(document).on('click', '.js-click-menu', function () {
-    $('#head_menu').toggleClass('hide')
-    $(this).find('i').toggleClass('close')
-  })
-  $(document).on('click', '#head_menu', function () {
-    $('#head_menu').addClass('hide')
-    $('.js-click-menu').find('i').removeClass('close')
-  })
   $(document).on('click', '.js-menu-list li', function () {
     window.location.href = $(this).attr('href')
   })
+
+  let menuList = $('.js-menu-list li')
+  let relUrl=getUrlRelativePath()
+  for (let i = 0; i < menuList.length; i++) {
+    let dom = $(menuList[i])
+    let href = dom.attr('href')
+    if (relUrl === href) dom.addClass('active')
+
+  }
+}
+function getUrlRelativePath() {
+  let url = document.location.toString()
+  let arrUrl = url.split("//")
+  let start = arrUrl[1].indexOf("/")
+  let relUrl = arrUrl[1].substring(start)
+  if (relUrl.indexOf("?") != -1) {
+    relUrl = relUrl.split("?")[0]
+  }
+  return relUrl
 }
 
 initMenuEvent()

@@ -180,10 +180,14 @@ input {
   box-sizing: border-box;
 }
 
-/* 业务相关*/
+@font-face {
+  font-family: 'product sans';
+  src: url('../font/pxiDypQkot1TnFhsFMOfGShVF9eOYktMqg.woff2');
+}
 
+/* 业务相关*/
 .headerpt {
-  padding-top: 44px;
+  padding-top: 84px;
 }
 
 .headerpt .header {
@@ -191,115 +195,65 @@ input {
   top: 0;
   left: 0;
   width: 100%;
-  height: 44px;
+  height: 84px;
   font-size: 16px;
-  line-height: 44px;
-  text-align: center;
   background: #fff;
   z-index: 99;
   user-select: none;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,.3);
 }
 
-.headerpt .header span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
+.headerpt .logo {
+  padding-top: 20px;
+  padding-left: 40px;
 }
 
-.headerpt .header span i {
-  display: block;
-  margin: 14px auto;
-  width: 16px;
-  height: 16px;
-  background: url(../img/menu.svg) no-repeat;
-  background-size: 100% 100%;
+.headerpt .logo  li {
+  display: inline-block;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-family: 'product sans'
+}
+.headerpt .logo  li.blue {
+  color: rgba(51, 105, 232, 1);
 }
 
-.headerpt .header span i.close {
-  background: url(../img/close.svg) no-repeat;
-  background-size: 100% 100%;
+.headerpt .logo  li.yellow {
+  color: rgba(238, 178, 17, 1);
+}
+
+.headerpt .logo  li.red {
+  color: rgba(213, 15, 37, 1);
+}
+
+.headerpt .logo  li.green {
+  color: rgba(0, 153, 37, 1);
 }
 
 .headerpt .head-menu {
-  position: fixed;
-  top: 44px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  padding-left: 20px;
 }
 
 .headerpt ul {
-  position: absolute;
-  top: 0;
-  padding-left: 16px;
-  width: 100%;
-  background: #fff;
+  clear: both;
+  overflow: hidden;
 }
 
-.headerpt ul li {
-  padding: 16px 0;
+.headerpt .head-menu ul li {
+  float: left;
+  margin: 0 20px;
+  padding: 15px 0;
   font-size: 14px;
-  line-height: 16px;
-  color: #25324e;
-  user-select: none;
+  color: #848484;
+}
+
+.headerpt .head-menu ul li.active {
+  color: #444;
+}
+
+.headerpt .head-menu li:hover {
+  color: #444;
   cursor: pointer;
-}
-
-.headerpt ul li i {
-  display: inline-block;
-  margin-right: 8px;
-  width: 16px;
-  height: 16px;
-  vertical-align: top;
-}
-
-.headerpt ul li.home i {
-  background: url(../img/home.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li.reverse i {
-  background: url(../img/reverse.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li.my-reverse i {
-  background: url(../img/my-reverse.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li.my-favorite i {
-  background: url(../img/favorite.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li.basic-info i {
-  background: url(../img/basic-info.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li.user-list i {
-  background: url(../img/user-list.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li.setting i {
-  background: url(../img/setting.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li.about i {
-  background: url(../img/about.svg) no-repeat;
-  background-size: 100% 100%;
-}
-
-.headerpt ul li:hover {
-  color: #9ec341;
 }
 
 .headerpt .head-menu.hide {

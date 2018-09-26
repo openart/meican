@@ -10,35 +10,24 @@ html
 
     block css
     div(class='headerpt')
-      div(class='header bdr-bottom')= title
-        span(class='js-click-menu')
-          i
-      div(class='head-menu hide' id='head_menu')
-        ul(class='js-menu-list')
-          li(href='/' class='home')
-            i
-            span 首页
-          li(href='/order/reverse' class='reverse')
-            i
-            span 预约
-          li(href='/user/reverse' class='my-reverse')
-            i
-            span 我的预约
-          li(href='/user/favorite' class='my-favorite')
-            i
-            span 我的收藏
-          li(href='/user/info' class='basic-info')
-            i
-            span 基本信息
-          li(href='/user/list' class='user-list')
-            i
-            span 用户列表
-          li(href='/setting' class='setting')
-            i
-            span 设置
-          li(href='/about' class='about')
-            i
-            span 关于
+      div(class='header')
+        ul(class='logo')
+          li(class='blue') M
+          li(class='red') A
+          li(class='yellow') I
+          li(class='blue') C
+          li(class='green') A
+          li(class='red') N
+        div(class='head-menu' id='head_menu')
+          ul(class='js-menu-list')
+            li(href='/' class='home') 首页
+            li(href='/order/reverse' class='reverse') 预约
+            li(href='/user/reverse' class='my-reverse') 我的预约
+            li(href='/user/favorite' class='my-favorite') 我的收藏
+            li(href='/user/info' class='basic-info') 基本信息
+            li(href='/user/list' class='user-list') 用户列表
+            li(href='/setting' class='setting') 设置
+            li(href='/about' class='about') 关于
   body
     block content
     script(src='https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js')
