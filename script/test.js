@@ -46,6 +46,9 @@ switch (+arguments[0]) {
     break
   case 12:
     testHoliday()
+    break
+  case 13:
+    testTemplate()
 }
 
 /**
@@ -212,4 +215,12 @@ function testHoliday() {
     if ([1, 2, 3, 4, 5].indexOf(day) === -1) return
     console.log('正常周一至周五点餐')
   }
+}
+
+function testTemplate() {
+  function getTemp() {
+    return `你好，${username}`
+  }
+  let username = '张三'
+  console.log(getTemp())
 }
