@@ -245,7 +245,7 @@ CheckIn.prototype = {
       let order = {
         user: result.user,
         status: result.status,
-        type: type,
+        type: 4,
         dish_id: result.id,
         dish_name: result.name,
         desc: result.desc,
