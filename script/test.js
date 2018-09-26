@@ -138,7 +138,13 @@ function wishFavData() {
 function wishUserData() {
   const path = require('../config').path
   let userList = dataBase.queryUserList()
-  fs.writeFileSync(path.newuser, JSON.stringify(userList))
+  userList = userList.map((v) => {
+    let date = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    v.regist_time = date
+    v.update_time = date
+    return v
+  })
+  fs.writeFileSync(path.user, JSON.stringify(userList))
 }
 
 function checkCalendar() {

@@ -32,8 +32,15 @@ let DataBase = {
         }
         return -1
       })()
+      // 设置注册时间与更新时间
+      item.regist_time = user[0].regist_time
+      item.update_time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
       userList.splice(index, 1, item)
     } else {
+      // 设置注册时间与更新时间
+      let date = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+      item.regist_time = date
+      item.update_time = date
       userList.push(item)
     }
     fs.writeFileSync(Path.user, JSON.stringify(userList))
