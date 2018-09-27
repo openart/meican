@@ -116,11 +116,11 @@ let DataBase = {
    */
   saveOrderReverse(params) {
     let fileNmae = params.user
-    let path = Path.order_reverse + fileNmae
+    let path = Path.my_reverse + fileNmae
 
     /**判断预约的文件夹是否存在，如不存在，则创建 */
-    if (!fs.existsSync(Path.order_reverse)) {
-      fs.mkdirSync(Path.order_reverse)
+    if (!fs.existsSync(Path.my_reverse)) {
+      fs.mkdirSync(Path.my_reverse)
     }
 
     /**
@@ -193,9 +193,9 @@ let DataBase = {
     if (isexists) {
       /**读取文件内容 */
       /**首先判断用户预约文件是否存在,如不存在，则直接返回空值 */
-      let isUserExists = fs.existsSync(Path.order_reverse + user)
+      let isUserExists = fs.existsSync(Path.my_reverse + user)
       if (!isUserExists) return {}
-      let txt = fs.readFileSync(Path.order_reverse + user)
+      let txt = fs.readFileSync(Path.my_reverse + user)
       obj = JSON.parse(txt)
     }
     return obj
@@ -407,6 +407,36 @@ let DataBase = {
     }
     let path = Path.order + date
     fs.writeFileSync(path, JSON.stringify(data))
+  },
+  // 获取所有的文件列表
+  getAllFiles() {
+    let root = Path.database
+    let rootFile = fs.readdirSync(root)
+    let list = rootFile.map(v => {
+      const filedir = path.join(root, v)
+
+      let stats = fs.statSync(filedir)
+      let isFile = stats.isFile()
+      let isDir = stats.isDirectory()
+      if (isFile) return {
+        root: v
+      }
+      if (isDir) {
+        return {
+          root: v,
+          list: fs.readdirSync(filedir)
+        }
+      }
+    })
+    return list
+  },
+  // 根据路径获取json数据
+  queryDataSetBypath(params) {
+    let root = Path.database
+    let p = path.join(root, params.root, params.file || '')
+    let txt = fs.readFileSync(p)
+    obj = JSON.parse(txt)
+    return obj
   }
 }
 

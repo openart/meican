@@ -31,6 +31,9 @@ router.get('/setting', home.userSetting)
 /**关于 */
 router.get('/about', home.about)
 
+/**数据集合 */
+router.get('/data/set', home.getDataSet)
+
 /**根据餐厅id查询食品列表 */
 router.get('/api/queryFoodListById', api.queryFoodListById)
 
@@ -51,5 +54,8 @@ router.get('/api/queryFoodListByName', api.queryFoodListByName)
 
 /**切换收藏 */
 router.get('/api/switchFavorite', api.switchFavorite)
+
+/**获取json数据 */
+router.get('/api/queryDataSetBypath', api.queryDataSetBypath)
 
 module.exports = router

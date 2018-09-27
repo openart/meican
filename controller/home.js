@@ -233,6 +233,33 @@ const Home = {
       title: '设置',
       data: setting
     })
+  },
+
+  /**
+   * 遍历文件夹，获取数据集合
+   * @param {context} req 
+   * @param {context} res 
+   */
+  async getDataSet(req, res) {
+    /**登录钩子函数 */
+    let login = await Auth.login(req)
+    if (!login) {
+      res.render('login', {
+        title: '登入'
+      })
+    }
+
+    /**查询用户信息 */
+    let user = await Auth.queryUserInfo(req)
+    let admin = require('../config/').admin
+
+    /**查询用户的设置信息 */
+    let list = admin.indexOf(user) > -1 ? dataBase.getAllFiles() : []
+
+    res.render('data_set', {
+      title: '数据库',
+      data: list
+    })
   }
 }
 

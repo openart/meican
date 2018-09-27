@@ -8,11 +8,12 @@ module.exports = {
     all_dishs: root + '/database/all_dishs/',
     fav_dishs: root + '/database/fav_dishs/',
     static_dishs: root + '/database/static_dishs',
-    order_reverse: root + '/database/order_reverse/',
+    my_reverse: root + '/database/my_reverse/',
     my_favorite: root + '/database/my_favorite/',
     setting: root + '/database/setting',
     calendar: root + '/database/calendar/',
-    order: root + '/database/order/'
+    order: root + '/database/order/',
+    database: root + '/database/'
   },
   host: {
     /**判断用户是否登录 */

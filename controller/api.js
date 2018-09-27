@@ -179,6 +179,15 @@ const API = {
     params.user = user
     dataBase.submitSwitchFavorite(params)
     res.json(utils.convert())
+  },
+  // 获取json数据
+  async queryDataSetBypath(req, res) {
+    let user = await Auth.queryUserInfo(req)
+    let admin = require('../config/').admin
+    if (admin.indexOf(user) === -1) res.json(utils.convert())
+    let params = req.query
+    let list = dataBase.queryDataSetBypath(params)
+    res.json(utils.convert(list))
   }
 }
 

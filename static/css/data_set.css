@@ -1,0 +1,64 @@
+.wrap {
+  padding: 16px;
+  color: #25324E;
+  clear: both;
+  overflow: hidden;
+}
+
+.wrap .opt {
+  float: left;
+  margin-right: 64px;
+  padding: 8px 16px 8px 0;
+  font-size: 14px;
+  line-height: 32px;
+}
+.wrap .opt span {
+  display: inline-block;
+  padding-right: 16px;
+}
+.wrap .opt select option {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+@font-face {
+  font-family: 'product sans';
+  src: url('../font/pxiDypQkot1TnFhsFMOfGShVF9eOYktMqg.woff2')
+}
+.pre-wrap {
+  padding: 16px;
+}
+pre {
+  padding: 16px;
+  font-family: 'product sans,Microsoft Yahei';
+  padding: 5px;
+  margin: 5px;
+  font-size: 14px;
+}
+
+.string {
+  color: green;
+}
+
+.number {
+  color: darkorange;
+}
+
+.boolean {
+  color: blue;
+}
+
+.null {
+  color: magenta;
+}
+
+.key {
+  color: red;
+}
+
+.empty-list {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

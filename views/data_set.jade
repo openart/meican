@@ -1,0 +1,24 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/css/data_set.css')
+
+block content
+  - if (data.length > 0)
+    div(class='wrap')
+      div(class='opt bdr-bottom')
+        span 一级目录
+        select(class='root' id='root')
+          - for (var i = 0; i < data.length; ++i) {
+              option(class='bdr-bottom' data-list=data[i].list value=data[i].root) #{data[i].root}
+          - }
+      div(class='opt bdr-bottom')
+        span 二级目录
+        select(class='file' id='file')
+    div(class='pre-wrap')
+      pre(id='pre_wrap')
+  - else
+    div(class='empty-list')
+      div 暂无权限
+block js
+  script(src='/js/data_set.js')
